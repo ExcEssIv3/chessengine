@@ -11,7 +11,7 @@
                 "-o",
                 "chessengine.out",
                 "-g",
-                "main.cpp"
+                "*.cpp"
             ],
             // Use the standard MS compiler pattern to detect errors, warnings and infos
             "problemMatcher": "$msCompile",

@@ -1,8 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "board.h"
 using namespace std;
 
 int main() {
-    cout << "Hello world!" << endl;
-    return 0;
+    board::mailbox testBoard = board::mailbox();
+    vector<vector<pieceTypes>> board = testBoard.getBoard();
+    testBoard.printBoard();
 }
