@@ -1,6 +1,7 @@
 #include "board.h"
 #include <tuple>
 #include <vector>
+#include <bitset>
 
 using namespace board;
 using namespace std;
@@ -58,3 +59,10 @@ vector<vector<pieceTypes>> bitboard::generateMailbox() {
 
     return mailbox;
 };
+
+void bitboard::printBitboard() {
+    for (int i = 0; i < 12; i++) {
+        bitset<64> bits(board[i]);
+        cout << bits << endl;
+    }
+}

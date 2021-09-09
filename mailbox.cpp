@@ -6,7 +6,7 @@ using namespace std;
 using namespace board;
 
 mailbox::mailbox() {
-    vector<vector<pieceTypes>> board = vector<vector<pieceTypes>> ({
+    this->board = vector<vector<pieceTypes>> ({
         vector<pieceTypes> ({
             pieceTypes::brook,
             pieceTypes::bknight,
@@ -89,7 +89,6 @@ mailbox::mailbox() {
         })
     });
     boardRepresentation = bitboard(board);
-
 };
 
 mailbox::mailbox(bitboard boardRepresentation) {
@@ -110,6 +109,10 @@ mailbox::mailbox(vector<vector<pieceTypes>> positions) {
 
 vector<vector<pieceTypes>> mailbox::getBoard() {
     return board;
+}
+
+bitboard mailbox::getBitboard() {
+    return boardRepresentation;
 }
 
 void mailbox::printBoard() {

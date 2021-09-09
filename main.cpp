@@ -5,6 +5,6 @@ using namespace std;
 
 int main() {
     board::mailbox testBoard = board::mailbox();
-    vector<vector<pieceTypes>> board = testBoard.getBoard();
     testBoard.printBoard();
+    testBoard.getBitboard().printBitboard();
 }

@@ -7,6 +7,7 @@ using namespace std;
 
 // TODO: create actual class destructor/constructor esque functions
 // TODO: setup to take in game string things from that video
+// TODO: investigate bitsets
 
     // enum of pieces for readability   
     enum class pieceTypes {
@@ -37,7 +38,7 @@ namespace board {
             void updateBitboard(pieceTypes piece, tuple<short, short> position);
             vector<unsigned long long> getBitboard();
             vector<vector<pieceTypes>> generateMailbox();
-
+            void printBitboard();
             private:
             // bitboard order:
             // white {pawn, rook, knight, bishop, queen, king}
@@ -56,10 +57,11 @@ namespace board {
             // accepts pointer because pointer can point to null for no piece
             mailbox(vector<vector<pieceTypes>> positions);
             vector<vector<pieceTypes>> getBoard();
+            bitboard getBitboard();
             void printBoard();
         private:
             bitboard boardRepresentation;
-            vector<vector<pieceTypes>> board = vector<vector<pieceTypes>> (8, vector<pieceTypes>(8, pieceTypes::empty));
+            vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
             char getPieceChar(pieceTypes piece);
             // any null pointer is assumed no piece
             // pieceTypes* parseBitboard();
