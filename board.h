@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <tuple>
+#include <map>
 using namespace std;
 
 // TODO: create actual class destructor/constructor esque functions
@@ -14,6 +15,8 @@ using namespace std;
 namespace BOARD {
 
     // enum of pieces for readability   
+
+    // TODO: build datastructure for this of some kind
     enum class pieceTypes {
         P,
         R,
@@ -29,6 +32,10 @@ namespace BOARD {
         q,
         empty
     };
+    
+    // char getPieceChar(pieceTypes piece);
+    // pieceTypes getPieceByChar(char piece);
+    // bool isValidChar(char piece);
     
     // TODO: print statement for board containing extra game information and mailbox
     
@@ -83,8 +90,7 @@ namespace BOARD {
             void flipNext();
             // 4 boolean vector representing KQkq (uppercase = white)
             vector<bool> getCastling();
-            // 0 for kingside, 0 for white
-            void setCastling(bool side, bool color);
+            void setCastling(vector<bool> castling);
             // piece position for en passant, holds [8,8] if n/a
             tuple<short, short> getEnPassant();
             short getHalfmoveClock();
@@ -93,6 +99,8 @@ namespace BOARD {
             int getFullmoveClock();
             void incrementFullmoveClock();
             string getFenString();
+            void setFenString(string newString);
+            void resetBoard();
         private:
             void updateFenString();
             bool next = 0;
