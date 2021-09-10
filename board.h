@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <tuple>
 using namespace std;
 
 // TODO: create actual class destructor/constructor esque functions
@@ -29,6 +30,48 @@ namespace BOARD {
         empty
     };
     
+    // TODO: print statement for board containing extra game information and mailbox
+    
+
+    class bitboard {
+        
+        public:
+            bitboard();
+            bitboard(vector<vector<pieceTypes>> mailbox);
+            // flips bit in a bitboard, not an actual move just an update
+            // tuple reads row, column
+            void updateBitboard(pieceTypes piece, tuple<short, short> position);
+            vector<unsigned long long> getBitboard();
+            vector<vector<pieceTypes>> generateMailbox();
+            void printBitboard();
+            private:
+            // bitboard order:
+            // white {pawn, rook, knight, bishop, queen, king}
+            // black {pawn, rook, knight, bishop, queen, king}
+            //mimics pieceTypes, should be able to reference bitboard through bitboard[pieceType]
+            vector<unsigned long long> board = vector<unsigned long long>(12, 0);
+
+            
+
+    };
+
+    class mailbox {
+        public:            
+            mailbox();
+            mailbox(bitboard boardRepresentation);
+            // accepts pointer because pointer can point to null for no piece
+            mailbox(vector<vector<pieceTypes>> positions);
+            vector<vector<pieceTypes>> getBoard();
+            bitboard getBitboard();
+            void printBoard();
+        private:
+            // bitboard boardRepresentation;
+            vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
+            char getPieceChar(pieceTypes piece);
+            // any null pointer is assumed no piece
+            // pieceTypes* parseBitboard();
+    };
+
     class board {
         public:
             board();
@@ -51,52 +94,18 @@ namespace BOARD {
         private:
             void updateFenString();
             bool next = 0;
+            // 4 boolean vector representing KQkq (uppercase = white)
             vector<bool> castling = vector<bool>(4, true);
-            // tuple<short, short> enPassant = make_tuple(8, 8);
+            tuple<short, short> enPassant = make_tuple(8, 8);
             short halfmoveClock = 0;
             int fullmoveClock = 0;
             string fenString;
+
+            // board representations
+            bitboard bitRepresentation;
+            mailbox arrayRepresentation;
     };
 
-    class bitboard: public board {
-        
-        public:
-            // flips bit in a bitboard, not an actual move just an update
-            // tuple reads row, column
-            bitboard();
-            bitboard(vector<vector<pieceTypes>> mailbox);
-            void updateBitboard(pieceTypes piece, tuple<short, short> position);
-            vector<unsigned long long> getBitboard();
-            vector<vector<pieceTypes>> generateMailbox();
-            void printBitboard();
-            private:
-            // bitboard order:
-            // white {pawn, rook, knight, bishop, queen, king}
-            // black {pawn, rook, knight, bishop, queen, king}
-            //mimics pieceTypes, should be able to reference bitboard through bitboard[pieceType]
-            vector<unsigned long long> board = vector<unsigned long long>(12, 0);
-
-            
-
-    };
-
-    class mailbox: public board {
-        public:            
-            mailbox();
-            mailbox(bitboard boardRepresentation);
-            // accepts pointer because pointer can point to null for no piece
-            mailbox(vector<vector<pieceTypes>> positions);
-            vector<vector<pieceTypes>> getBoard();
-            bitboard getBitboard();
-            void printBoard();
-        private:
-            bitboard boardRepresentation;
-            vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
-            char getPieceChar(pieceTypes piece);
-            // any null pointer is assumed no piece
-            // pieceTypes* parseBitboard();
-    };
-
-}
+};
 
 #endif

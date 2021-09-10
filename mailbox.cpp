@@ -89,22 +89,15 @@ mailbox::mailbox() {
             pieceTypes::R
         })
     });
-    boardRepresentation = bitboard(board);
+    // boardRepresentation = bitboard(board);
 };
 
 mailbox::mailbox(bitboard boardRepresentation) {
-    this->boardRepresentation = boardRepresentation;
+    // this->boardRepresentation = boardRepresentation;
     board = boardRepresentation.generateMailbox();
 };
 
 mailbox::mailbox(vector<vector<pieceTypes>> positions) {
-    for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++) {
-            if(positions[i][j] != pieceTypes::empty) {
-                boardRepresentation.updateBitboard(positions[i][j], make_tuple(i, j));
-            }
-        }
-    }
     board = positions;
 };
 
@@ -113,6 +106,14 @@ vector<vector<pieceTypes>> mailbox::getBoard() {
 }
 
 bitboard mailbox::getBitboard() {
+    bitboard boardRepresentation = bitboard();
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            if(board[i][j] != pieceTypes::empty) {
+                boardRepresentation.updateBitboard(board[i][j], make_tuple(i, j));
+            }
+        }
+    }
     return boardRepresentation;
 }
 

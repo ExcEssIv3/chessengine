@@ -8,6 +8,7 @@
             "type": "shell",
             "command": ["g++"],
             "args": [
+                "-std=c++2a",
                 "-o",
                 "chessengine.out",
                 "-g",
