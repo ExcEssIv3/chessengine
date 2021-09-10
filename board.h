@@ -35,6 +35,8 @@ namespace BOARD {
 
     class bitboard {
         
+        // TODO: fenString regex validation
+
         public:
             bitboard();
             bitboard(vector<vector<pieceTypes>> mailbox);

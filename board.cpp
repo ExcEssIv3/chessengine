@@ -11,11 +11,10 @@ using namespace BOARD;
 board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     arrayRepresentation = mailbox();
-    bitRepresentation = bitboard();
+    bitRepresentation = arrayRepresentation.getBitboard();
 }
 
-// TODO: add a try/catch around the string parse
-
+// throws exception if invalid fenString
 board::board(string fenString) {
     this->fenString = fenString;
 
@@ -53,6 +52,9 @@ board::board(string fenString) {
             loc++;
             indices[0] = 0;
             indices[1]++;
+        } else {
+            string exception = "Invalid character in fenString: " + fenString[loc];
+            throw exception;
         }
     }
 
@@ -70,6 +72,7 @@ board::board(string fenString) {
     nextEval.clear();
 
     // check castling availability
+    if (ss.eof) throw "FenString reached end early";
     ss >> nextEval;
     if (nextEval.compare("-")) {
         castling = { false, false, false, false };
@@ -90,6 +93,7 @@ board::board(string fenString) {
     nextEval.clear();
 
     // check en passant
+    if (ss.eof) throw "FenString reached end early";
     ss >> nextEval;
     if (!nextEval.compare("-")) {
         // -97 shifts ascii code over to 0 for a, 1 for b etc.
@@ -101,7 +105,9 @@ board::board(string fenString) {
 
     // shift into moveclocks
 
+    if (ss.eof) throw "FenString reached end early";
     ss >> halfmoveClock;
+    if (ss.eof) throw "FenString reached end early";
     ss >> fullmoveClock;
 };
 

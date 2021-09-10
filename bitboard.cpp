@@ -2,11 +2,13 @@
 #include <tuple>
 #include <vector>
 #include <bitset>
+#include <iostream>
 
 using namespace BOARD;
 using namespace std;
 
 bitboard::bitboard() {
+    // TODO: update bitboard to hold actual bitboard values
     board = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
@@ -23,8 +25,13 @@ bitboard::bitboard(vector<vector<pieceTypes>> mailbox) {
     }
 };
 
+// throws exception on out of bounds
 void bitboard::updateBitboard(pieceTypes piece, tuple<short, short> position) {
     short positionConversion = get<0>(position) * 8 + get<1>(position);
+    if (positionConversion > 63) {
+        string exception = "Position out of bounds, passed value is " + to_string(get<0>(position)) + ", " + to_string(get<1>(position));
+        throw exception;
+    }
     board[static_cast<int>(piece)] ^= 1UL << positionConversion;
 };
 
