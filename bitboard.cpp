@@ -3,7 +3,7 @@
 #include <vector>
 #include <bitset>
 
-using namespace board;
+using namespace BOARD;
 using namespace std;
 
 bitboard::bitboard() {

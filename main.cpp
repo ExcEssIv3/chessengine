@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    board::mailbox testBoard = board::mailbox();
+    BOARD::mailbox testBoard = BOARD::mailbox();
     testBoard.printBoard();
     testBoard.getBitboard().printBitboard();
 }

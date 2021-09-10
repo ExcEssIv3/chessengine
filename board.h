@@ -9,26 +9,56 @@ using namespace std;
 // TODO: setup to take in game string things from that video
 // TODO: investigate bitsets
 
+    
+namespace BOARD {
+
     // enum of pieces for readability   
     enum class pieceTypes {
-        wpawn,
-        wrook,
-        wknight,
-        wbishop,
-        wqueen,
-        wking,
-        bpawn,
-        brook,
-        bknight,
-        bbishop,
-        bqueen,
-        bking,
+        P,
+        R,
+        N,
+        B,
+        K,
+        Q,
+        p,
+        r,
+        n,
+        b,
+        k,
+        q,
         empty
     };
+    
+    class board {
+        public:
+            board();
+            board(string fenString);
+            // 0 for white
+            bool getNext();
+            void flipNext();
+            // 4 boolean vector representing KQkq (uppercase = white)
+            vector<bool> getCastling();
+            // 0 for kingside, 0 for white
+            void setCastling(bool side, bool color);
+            // piece position for en passant, holds [8,8] if n/a
+            tuple<short, short> getEnPassant();
+            short getHalfmoveClock();
+            void incrementHalfmoveClock();
+            void resetHalfmoveClock();
+            int getFullmoveClock();
+            void incrementFullmoveClock();
+            string getFenString();
+        private:
+            void updateFenString();
+            bool next = 0;
+            vector<bool> castling = vector<bool>(4, true);
+            // tuple<short, short> enPassant = make_tuple(8, 8);
+            short halfmoveClock = 0;
+            int fullmoveClock = 0;
+            string fenString;
+    };
 
-namespace board {
-
-    class bitboard {
+    class bitboard: public board {
         
         public:
             // flips bit in a bitboard, not an actual move just an update
@@ -50,7 +80,7 @@ namespace board {
 
     };
 
-    class mailbox {
+    class mailbox: public board {
         public:            
             mailbox();
             mailbox(bitboard boardRepresentation);
