@@ -3,6 +3,7 @@
         "*.tcc": "cpp",
         "memory_resource": "cpp",
         "type_traits": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "tuple": "cpp"
     }
 }

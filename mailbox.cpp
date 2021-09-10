@@ -99,6 +99,8 @@ mailbox::mailbox(vector<vector<pieceTypes>> positions) {
     board = positions;
 };
 
+mailbox::~mailbox() {};
+
 vector<vector<pieceTypes>> mailbox::getBoard() {
     return board;
 }

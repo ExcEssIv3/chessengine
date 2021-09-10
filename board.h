@@ -7,8 +7,6 @@
 #include <map>
 using namespace std;
 
-// TODO: create actual class destructor/constructor esque functions
-// TODO: setup to take in game string things from that video
 // TODO: investigate bitsets
 
     
@@ -47,6 +45,7 @@ namespace BOARD {
         public:
             bitboard();
             bitboard(vector<vector<pieceTypes>> mailbox);
+            ~bitboard();
             // flips bit in a bitboard, not an actual move just an update
             // tuple reads row, column
             void updateBitboard(pieceTypes piece, tuple<short, short> position);
@@ -68,6 +67,7 @@ namespace BOARD {
         public:            
             mailbox();
             mailbox(bitboard boardRepresentation);
+            ~mailbox();
             // accepts pointer because pointer can point to null for no piece
             mailbox(vector<vector<pieceTypes>> positions);
             vector<vector<pieceTypes>> getBoard();
@@ -85,6 +85,7 @@ namespace BOARD {
         public:
             board();
             board(string fenString);
+            ~board();
             // 0 for white
             bool getNext();
             void flipNext();

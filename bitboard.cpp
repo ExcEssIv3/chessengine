@@ -25,6 +25,8 @@ bitboard::bitboard(vector<vector<pieceTypes>> mailbox) {
     }
 };
 
+bitboard::~bitboard() {};
+
 // throws exception on out of bounds
 void bitboard::updateBitboard(pieceTypes piece, tuple<short, short> position) {
     short positionConversion = get<0>(position) * 8 + get<1>(position);

@@ -79,6 +79,8 @@ board::board(string fenString) {
     setFenString(fenString);
 };
 
+board::~board() {};
+
 bool board::getNext() {
     return next;
 };
@@ -284,6 +286,4 @@ void board::updateFenString() {
     stringstream ss = stringstream();
     ss << halfmoveClock << " " << fullmoveClock;
     newFen += ss.str();
-
-
-}
+};
