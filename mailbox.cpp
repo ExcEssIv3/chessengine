@@ -89,11 +89,9 @@ mailbox::mailbox() {
             pieceTypes::R
         })
     });
-    // boardRepresentation = bitboard(board);
 };
 
 mailbox::mailbox(bitboard boardRepresentation) {
-    // this->boardRepresentation = boardRepresentation;
     board = boardRepresentation.generateMailbox();
 };
 
