@@ -13,14 +13,14 @@ chessengine.out: main.o board.o bitboard.o mailbox.o
 main.o: board.o bitboard.o mailbox.o
 	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/main.cpp $(BOARD)/*.o -c -o $(BUILDDIR)/main.o
 
-bitboard.o: board.o
-	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/bitboard.cpp $(BOARD)/board.o -c -o $(BOARD)/bitboard.o
+board.o: bitboard.o mailbox.o
+	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/board.cpp $(BOARD)/bitboard.o $(BOARD)/mailbox.o -c -o $(BOARD)/board.o
 
-mailbox.o: board.o
-	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/mailbox.cpp $(BOARD)/board.o -c -o $(BOARD)/mailbox.o
+bitboard.o:
+	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/bitboard.cpp -c -o $(BOARD)/bitboard.o
 
-board.o:
-	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/board.cpp -c -o $(BOARD)/board.o
+mailbox.o:
+	$(CXX) $(CXXFLAGS) $(SOURCEDIR)/board/mailbox.cpp -c -o $(BOARD)/mailbox.o
 
 clean:
 	rm -rf $(BUILDDIR)/*.o
