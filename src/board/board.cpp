@@ -97,7 +97,7 @@ void board::setCastling(vector<bool> castling) {
     this->castling = castling;
 };
 
-tuple<short, short> board::getEnPassant() {
+vector<short> board::getEnPassant() {
     return enPassant;
 };
 
@@ -136,20 +136,30 @@ void board::setFenString(string newString) {
     short loc = 0;
     
     while (i < 64) {
+        try {
         if (isValidChar(fenString[loc])) {
-            positions[indices[0]][indices[1]] = pieceTypes(fenString[loc]);
-            indices[0]++;
+            positions[indices[0]][indices[1]] = getPieceByChar(fenString[loc]);
+            indices[1]++;
             i++;
+            loc++;
         } else if (isdigit(fenString[loc])) {
-            indices[0] += fenString[loc];
-            i += fenString[loc];
+            indices[1] += fenString[loc] - '0';
+            i += fenString[loc] - '0';
+            loc++;
+            // loc += fenString[loc];
         } else if (fenString[loc] == '/') {
             loc++;
-            indices[0] = 0;
-            indices[1]++;
+            indices[1] = 0;
+            indices[0]++;
         } else {
             string exception = "Invalid character in fenString: " + fenString[loc];
             throw exception;
+        }
+        if (indices[0] >= 8 || indices[1] >= 8) {
+            cout << "0: " << indices[0] << " 1: " << indices[1] << endl;
+        }
+        } catch (const exception& e) {
+            cout << e.what() << endl;
         }
     }
 
@@ -163,25 +173,25 @@ void board::setFenString(string newString) {
 
     // check whose turn is next
     ss >> nextEval;
-    next = (nextEval.compare("b"));
+    next = !(nextEval.compare("b"));
     nextEval.clear();
 
     // check castling availability
     if (ss.eof()) throw "FenString reached end early";
     ss >> nextEval;
-    if (nextEval.compare("-")) {
+    if (!nextEval.compare("-")) {
         castling = { false, false, false, false };
     } else {
-        if (nextEval.find('K') > -1) {
+        if (nextEval.find('K') >= 0) {
             castling[0] = true;
         }
-        if (nextEval.find('Q') > -1) {
+        if (nextEval.find('Q') >= 0) {
             castling[1] = true;
         }
-        if (nextEval.find('k') > -1) {
+        if (nextEval.find('k') >= 0) {
             castling[2] = true;
         }
-        if (nextEval.find('q') > -1) {
+        if (nextEval.find('q') >= 0) {
             castling[3] = true;
         }
     }
@@ -190,11 +200,11 @@ void board::setFenString(string newString) {
     // check en passant
     if (ss.eof()) throw "FenString reached end early";
     ss >> nextEval;
-    if (!nextEval.compare("-")) {
+    if (nextEval.compare("-")) {
         // -97 shifts ascii code over to 0 for a, 1 for b etc.
-        enPassant = make_tuple(nextEval[0] - 97, nextEval[1]);
+        enPassant = { static_cast<short>((nextEval[0]) - 97), static_cast<short>(nextEval[1]) };
     } else {
-        enPassant = make_tuple(8, 8);
+        enPassant = {8, 8};
     }
     nextEval.clear();
 
@@ -210,6 +220,14 @@ void board::setFenString(string newString) {
 void board::resetBoard() {
     return;
 };
+
+void board::printMailbox() {
+    arrayRepresentation.printBoard();
+}
+
+void board::printBitboard() {
+    bitRepresentation.printBitboard();
+}
 
 void board::updateFenString() {
     string newFen(92, ' ');
@@ -269,13 +287,13 @@ void board::updateFenString() {
 
     // en passant
     stringIndex++;
-    if (get<0>(enPassant) == 8 && get<1>(enPassant) == 8) {
+    if (enPassant[0] == 8 && enPassant[1] == 8) {
         newFen[stringIndex] = '-';
         stringIndex++;
     } else {
-        newFen[stringIndex] = static_cast<char>(get<0>(enPassant) + 97);
+        newFen[stringIndex] = static_cast<char>(enPassant[0] + 97);
         stringIndex++;
-        newFen[stringIndex] = get<1>(enPassant);
+        newFen[stringIndex] = enPassant[1];
         stringIndex++;
     }
 

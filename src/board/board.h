@@ -93,7 +93,7 @@ namespace BOARD {
             vector<bool> getCastling();
             void setCastling(vector<bool> castling);
             // piece position for en passant, holds [8,8] if n/a
-            tuple<short, short> getEnPassant();
+            vector<short> getEnPassant();
             short getHalfmoveClock();
             void incrementHalfmoveClock();
             void resetHalfmoveClock();
@@ -102,12 +102,14 @@ namespace BOARD {
             string getFenString();
             void setFenString(string newString);
             void resetBoard();
+            void printMailbox();
+            void printBitboard();
         private:
             void updateFenString();
             bool next = 0;
             // 4 boolean vector representing KQkq (uppercase = white)
-            vector<bool> castling = vector<bool>(4, true);
-            tuple<short, short> enPassant = make_tuple(8, 8);
+            vector<bool> castling = { false, false, false, false };
+            vector<short> enPassant = {8, 8};
             short halfmoveClock = 0;
             int fullmoveClock = 0;
             string fenString;
