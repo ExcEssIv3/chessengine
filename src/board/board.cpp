@@ -1,4 +1,5 @@
 #include "board.h"
+#include "piece.h"
 #include <iostream>
 #include <tuple>
 #include <map>
@@ -7,65 +8,6 @@
 
 using namespace std;
 using namespace BOARD;
-
-char getPieceChar(pieceTypes piece) {
-    map<pieceTypes, char> m {
-        { pieceTypes::P, 'P' },
-        { pieceTypes::R, 'R' },
-        { pieceTypes::N, 'N' },
-        { pieceTypes::B, 'B' },
-        { pieceTypes::K, 'K' },
-        { pieceTypes::Q, 'Q' },
-        { pieceTypes::p, 'p' },
-        { pieceTypes::r, 'r' },
-        { pieceTypes::n, 'n' },
-        { pieceTypes::b, 'b' },
-        { pieceTypes::k, 'k' },
-        { pieceTypes::q, 'k' },
-        { pieceTypes::empty, ' ' }
-    };
-
-    return m[piece];
-}
-
-pieceTypes getPieceByChar(char piece) {
-    map<char, pieceTypes> m {
-        { 'P', pieceTypes::P },
-        { 'R', pieceTypes::R },
-        { 'N', pieceTypes::N },
-        { 'B', pieceTypes::B },
-        { 'K', pieceTypes::K },
-        { 'Q', pieceTypes::Q },
-        { 'p', pieceTypes::p },
-        { 'r', pieceTypes::r },
-        { 'n', pieceTypes::n },
-        { 'b', pieceTypes::b },
-        { 'k', pieceTypes::k },
-        { 'q', pieceTypes::q },
-        { ' ', pieceTypes::empty }
-    };
-
-    return m[piece];
-}
-
-bool isValidChar(char piece) {
-    map<char, pieceTypes> m {
-        { 'P', pieceTypes::P },
-        { 'R', pieceTypes::R },
-        { 'N', pieceTypes::N },
-        { 'B', pieceTypes::B },
-        { 'K', pieceTypes::K },
-        { 'Q', pieceTypes::Q },
-        { 'p', pieceTypes::p },
-        { 'r', pieceTypes::r },
-        { 'n', pieceTypes::n },
-        { 'b', pieceTypes::b },
-        { 'k', pieceTypes::k },
-        { 'q', pieceTypes::q }
-    };
-
-    return m.contains(piece);
-}
 
 board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -122,6 +64,7 @@ void board::incrementFullmoveClock() {
 };
 
 string board::getFenString() {
+    updateFenString();
     return fenString;
 };
 
@@ -131,12 +74,11 @@ void board::setFenString(string newString) {
 
     vector<vector<pieceTypes>> positions(8, vector<pieceTypes>(8, pieceTypes::empty));
 
-    short indices[] = {0, 0};
+    short indices[] = {7, 0};
     short i = 0;
     short loc = 0;
     
     while (i < 64) {
-        try {
         if (isValidChar(fenString[loc])) {
             positions[indices[0]][indices[1]] = getPieceByChar(fenString[loc]);
             indices[1]++;
@@ -146,21 +88,17 @@ void board::setFenString(string newString) {
             indices[1] += fenString[loc] - '0';
             i += fenString[loc] - '0';
             loc++;
-            // loc += fenString[loc];
         } else if (fenString[loc] == '/') {
             loc++;
             indices[1] = 0;
-            indices[0]++;
+            indices[0]--;
         } else {
             string exception = "Invalid character in fenString: " + fenString[loc];
             throw exception;
         }
-        if (indices[0] >= 8 || indices[1] >= 8) {
-            cout << "0: " << indices[0] << " 1: " << indices[1] << endl;
-        }
-        } catch (const exception& e) {
-            cout << e.what() << endl;
-        }
+        // if (indices[0] < 0 || indices[1] >= 8) {
+        //     cout << "0: " << indices[0] << " 1: " << indices[1] << endl;
+        // }
     }
 
     arrayRepresentation = mailbox(positions);
@@ -229,10 +167,20 @@ void board::printBitboard() {
     bitRepresentation.printBitboard();
 }
 
+void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
+    pieceTypes piece = arrayRepresentation.getPieceAtIndex(startIndex);
+    arrayRepresentation.movePiece(startIndex, finalIndex);
+    bitRepresentation.movePiece(
+        piece,
+        startIndex[0] * 8 + startIndex[1],
+        finalIndex[0] * 8 + finalIndex[1]
+    );
+}
+
 void board::updateFenString() {
     string newFen(92, ' ');
     short stringIndex = 0;;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 7; i > -1; i--) {
         int numEmptySpaces = 0;
         for (int j = 0; j < 8; j++) {
             if (arrayRepresentation.getBoard()[i][j] == pieceTypes::empty) {
@@ -304,4 +252,5 @@ void board::updateFenString() {
     stringstream ss = stringstream();
     ss << halfmoveClock << " " << fullmoveClock;
     newFen += ss.str();
+    fenString = newFen;
 };

@@ -1,10 +1,12 @@
 #ifndef MAILBOX_H
 #define MAILBOX_H
 
+#include "piece.h"
 #include <iostream>
 #include <vector>
 #include <tuple>
 #include <map>
+#include <bitset>
 using namespace std;
 
 // TODO: investigate bitsets
@@ -12,31 +14,7 @@ using namespace std;
     
 namespace BOARD {
 
-    // enum of pieces for readability   
-
-    // TODO: build datastructure for this of some kind
-    enum class pieceTypes {
-        P,
-        R,
-        N,
-        B,
-        K,
-        Q,
-        p,
-        r,
-        n,
-        b,
-        k,
-        q,
-        empty
-    };
-    
-    // char getPieceChar(pieceTypes piece);
-    // pieceTypes getPieceByChar(char piece);
-    // bool isValidChar(char piece);
-    
     // TODO: print statement for board containing extra game information and mailbox
-    
 
     class bitboard {
         
@@ -47,20 +25,19 @@ namespace BOARD {
             bitboard(vector<vector<pieceTypes>> mailbox);
             ~bitboard();
             // flips bit in a bitboard, not an actual move just an update
-            // tuple reads row, column
-            void updateBitboard(pieceTypes piece, tuple<short, short> position);
-            vector<unsigned long long> getBitboard();
+            void updateBitboard(pieceTypes piece, vector<short> position);
+            vector<bitset<64>> getBitboard();
             vector<vector<pieceTypes>> generateMailbox();
             void printBitboard();
+            // this one is slow, use one with piece paramter if possible
+            void movePiece(short startIndex, short finalIndex);
+            void movePiece(pieceTypes piece, short startIndex, short finalIndex);
             private:
             // bitboard order:
             // white {pawn, rook, knight, bishop, queen, king}
             // black {pawn, rook, knight, bishop, queen, king}
             //mimics pieceTypes, should be able to reference bitboard through bitboard[pieceType]
-            vector<unsigned long long> board = vector<unsigned long long>(12, 0);
-
-            
-
+            vector<bitset<64>> board = vector<bitset<64>>(12, 0);
     };
 
     class mailbox {
@@ -72,7 +49,9 @@ namespace BOARD {
             mailbox(vector<vector<pieceTypes>> positions);
             vector<vector<pieceTypes>> getBoard();
             bitboard getBitboard();
+            pieceTypes getPieceAtIndex(vector<short> index);
             void printBoard();
+            void movePiece(vector<short> startIndex, vector<short> finalIndex);
         private:
             // bitboard boardRepresentation;
             vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
@@ -104,6 +83,7 @@ namespace BOARD {
             void resetBoard();
             void printMailbox();
             void printBitboard();
+            void movePiece(vector<short> startIndex, vector<short> finalIndex);
         private:
             void updateFenString();
             bool next = 0;

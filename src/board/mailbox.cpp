@@ -1,4 +1,5 @@
 #include "board.h"
+#include "piece.h"
 #include <iostream>
 #include <vector>
 #include <tuple>
@@ -110,15 +111,19 @@ bitboard mailbox::getBitboard() {
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 8; j++) {
             if(board[i][j] != pieceTypes::empty) {
-                boardRepresentation.updateBitboard(board[i][j], make_tuple(i, j));
+                boardRepresentation.updateBitboard(board[i][j], {static_cast<short>(i), static_cast<short>(j)});
             }
         }
     }
     return boardRepresentation;
-}
+};
+
+pieceTypes mailbox::getPieceAtIndex(vector<short> index) {
+    return pieceTypes::empty;
+};
 
 void mailbox::printBoard() {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 7; i > -1; i--) {
         cout << " --- --- --- --- --- --- --- ---" << endl;
         for (int j = 0; j < 8; j++) {
             cout << "| " << getPieceChar(board[i][j]) << " ";
@@ -126,6 +131,12 @@ void mailbox::printBoard() {
         cout << "|" << endl;
     }
     cout <<  " --- --- --- --- --- --- --- ---" << endl;
+};
+
+void mailbox::movePiece(vector<short> startIndex, vector<short>finalIndex) {
+    pieceTypes piece = board[startIndex[0]][startIndex[1]];
+    board[startIndex[0]][startIndex[1]] = pieceTypes::empty;
+    board[finalIndex[0]][finalIndex[1]] = piece;
 };
 
 char mailbox::getPieceChar(pieceTypes piece) {
