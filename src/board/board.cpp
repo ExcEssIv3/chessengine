@@ -202,7 +202,7 @@ void board::setFenString(string newString) {
     ss >> nextEval;
     if (nextEval.compare("-")) {
         // -97 shifts ascii code over to 0 for a, 1 for b etc.
-        enPassant = { static_cast<short>((nextEval[0]) - 97), static_cast<short>(nextEval[1]) };
+        enPassant = { static_cast<short>((nextEval[0]) - 97), static_cast<short>(nextEval[1] - '0' - 1) };
     } else {
         enPassant = {8, 8};
     }
