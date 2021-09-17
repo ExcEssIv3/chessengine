@@ -45,7 +45,6 @@ namespace BOARD {
             mailbox();
             mailbox(bitboard boardRepresentation);
             ~mailbox();
-            // accepts pointer because pointer can point to null for no piece
             mailbox(vector<vector<pieceTypes>> positions);
             vector<vector<pieceTypes>> getBoard();
             bitboard getBitboard();
@@ -53,11 +52,7 @@ namespace BOARD {
             void printBoard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
         private:
-            // bitboard boardRepresentation;
             vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
-            char getPieceChar(pieceTypes piece);
-            // any null pointer is assumed no piece
-            // pieceTypes* parseBitboard();
     };
 
     class board {

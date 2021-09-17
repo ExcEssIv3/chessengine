@@ -138,10 +138,3 @@ void mailbox::movePiece(vector<short> startIndex, vector<short>finalIndex) {
     board[startIndex[0]][startIndex[1]] = pieceTypes::empty;
     board[finalIndex[0]][finalIndex[1]] = piece;
 };
-
-char mailbox::getPieceChar(pieceTypes piece) {
-    char pieceChar[] = {
-        'P', 'R', 'N', 'B', 'K', 'Q', 'p', 'r', 'n', 'b', 'k', 'q', ' '
-    };
-    return pieceChar[static_cast<int>(piece)];
-};
