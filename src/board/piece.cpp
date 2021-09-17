@@ -15,7 +15,7 @@ char getPieceChar(pieceTypes piece) {
         { pieceTypes::n, 'n' },
         { pieceTypes::b, 'b' },
         { pieceTypes::k, 'k' },
-        { pieceTypes::q, 'k' },
+        { pieceTypes::q, 'q' },
         { pieceTypes::empty, ' ' }
     };
 

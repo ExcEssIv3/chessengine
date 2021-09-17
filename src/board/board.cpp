@@ -178,8 +178,7 @@ void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
 }
 
 void board::updateFenString() {
-    string newFen(92, ' ');
-    short stringIndex = 0;;
+    stringstream newFen = stringstream();
     for (int i = 7; i > -1; i--) {
         int numEmptySpaces = 0;
         for (int j = 0; j < 8; j++) {
@@ -187,70 +186,55 @@ void board::updateFenString() {
                 numEmptySpaces++;
             } else {
                 if (numEmptySpaces > 0) {
-                    newFen[stringIndex] = numEmptySpaces;
+                    newFen << numEmptySpaces;
                     numEmptySpaces = 0;
-                    stringIndex++;
                 }
-                newFen[stringIndex] = getPieceChar(arrayRepresentation.getBoard()[i][j]);
+                newFen << getPieceChar(arrayRepresentation.getBoard()[i][j]);
             }
         }
         if (numEmptySpaces > 0) {
-            newFen[stringIndex] = numEmptySpaces;
+            newFen << numEmptySpaces;
             numEmptySpaces = 0;
-            stringIndex++;
         }
-        newFen[stringIndex] = '/';
-        stringIndex = 0;
+        if (i > 0) {
+            newFen << '/';
+        }
     }
     
     // marking next move
-    // shifting spot one
-    stringIndex++;
-    newFen[stringIndex] = (next) ? 'b' : 'w';
-    stringIndex++;
+    if (next) {
+        newFen << " b ";
+    } else {
+        newFen << " w ";
+    }
 
     // marking castling
-    stringIndex++;
     if (!(castling[0] || castling[1] || castling[2] || castling[3])) {
-        newFen[stringIndex] = '-';
-        stringIndex++;
+        newFen << '-';
     } else {
         if (castling[0]) {
-            newFen[stringIndex] = 'K';
-            stringIndex++;
+            newFen << 'K';
         }
         if (castling[1]) {
-            newFen[stringIndex] = 'Q';
-            stringIndex++;
+            newFen << 'Q';
         }
         if (castling[2]) {
-            newFen[stringIndex] = 'k';
-            stringIndex++;
+            newFen << 'k';
         }
         if (castling[3]) {
-            newFen[stringIndex] = 'q';
-            stringIndex++;
+            newFen << 'q';
         }
     }
 
     // en passant
-    stringIndex++;
     if (enPassant[0] == 8 && enPassant[1] == 8) {
-        newFen[stringIndex] = '-';
-        stringIndex++;
+        newFen << " - ";
     } else {
-        newFen[stringIndex] = static_cast<char>(enPassant[0] + 97);
-        stringIndex++;
-        newFen[stringIndex] = enPassant[1];
-        stringIndex++;
+        newFen << " " << static_cast<char>(enPassant[0] + 97);
+        newFen << enPassant[1] << " ";
     }
 
-    // might be a runtime error
-    newFen.substr(0, stringIndex);
-
     // clocks
-    stringstream ss = stringstream();
-    ss << halfmoveClock << " " << fullmoveClock;
-    newFen += ss.str();
-    fenString = newFen;
+    newFen << halfmoveClock << " " << fullmoveClock;
+    fenString = newFen.str();
 };
