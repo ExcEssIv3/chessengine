@@ -6,12 +6,8 @@
         {
             "label": "g++ build",
             "type": "shell",
-            "command": ["g++"],
+            "command": ["make"],
             "args": [
-                "-o",
-                "chessengine.out",
-                "-g",
-                "main.cpp"
             ],
             // Use the standard MS compiler pattern to detect errors, warnings and infos
             "problemMatcher": "$msCompile",

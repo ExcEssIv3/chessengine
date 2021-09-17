@@ -13,10 +13,10 @@
                 "${myDefaultIncludePath}"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",
             "cppStandard": "c++20"
-            // "compileCommands": "compile_commands.json"
+            // "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4
