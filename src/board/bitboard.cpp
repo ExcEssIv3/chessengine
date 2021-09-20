@@ -15,12 +15,12 @@ bitboard::bitboard() {
     };
 }
 
-bitboard::bitboard(vector<vector<pieceTypes>> mailbox) {
+bitboard::bitboard(vector<vector<piece*>> mailbox) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-            if (mailbox[i][j] != pieceTypes::empty) {
+            if (mailbox[i][j]->getPieceType() != pieceTypes::empty) {
                 short positionConversion = i * 8 + j;
-                board[static_cast<int>(mailbox[i][j])] ^= 1UL << positionConversion;
+                board[static_cast<int>(mailbox[i][j]->getPieceType())] ^= 1UL << positionConversion;
             }
         }
     }
@@ -29,21 +29,21 @@ bitboard::bitboard(vector<vector<pieceTypes>> mailbox) {
 bitboard::~bitboard() {};
 
 // throws exception on out of bounds
-void bitboard::updateBitboard(pieceTypes piece, vector<short> position) {
+void bitboard::updateBitboard(piece* pieces, vector<short> position) {
     short positionConversion = position[0] * 8 + position[1];
     if (positionConversion > 63) {
         string exception = "Position out of bounds, passed value is " + to_string(position[0]) + ", " + to_string(position[1]);
         throw exception;
     }
-    board[static_cast<int>(piece)][positionConversion].flip();
+    board[static_cast<int>(pieces->getPieceType())][positionConversion].flip();
 };
 
 vector<bitset<64>> bitboard::getBitboard() {
     return board;
 };
 
-vector<vector<pieceTypes>> bitboard::generateMailbox() {
-    vector<vector<pieceTypes>> mailbox(8, vector<pieceTypes>(8, pieceTypes::empty));
+vector<vector<piece*>> bitboard::generateMailbox() {
+    vector<vector<piece*>> mailbox(8, vector<piece*>(8, &piece()));
 
     for(int i = 0; i < 12; i++) {
         
@@ -51,7 +51,9 @@ vector<vector<pieceTypes>> bitboard::generateMailbox() {
 
         for (int j = 0; j < 64; j++) {
             if (board[i][j]) {
+                delete mailbox[j / 8][j % 8];
                 mailbox[j / 8][j % 8] = getPieceByShort(i);
+                mailbox[j / 8][j % 8]->move({static_cast<short>(j / 8), static_cast<short>(j % 8)});
             }
         }
     }

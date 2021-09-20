@@ -7,6 +7,7 @@
 #include <tuple>
 #include <map>
 #include <bitset>
+using namespace PIECE;
 using namespace std;
 
 // TODO: investigate bitsets
@@ -22,12 +23,12 @@ namespace BOARD {
 
         public:
             bitboard();
-            bitboard(vector<vector<pieceTypes>> mailbox);
+            bitboard(vector<vector<piece*>> mailbox);
             ~bitboard();
             // flips bit in a bitboard, not an actual move just an update
-            void updateBitboard(pieceTypes piece, vector<short> position);
+            void updateBitboard(piece* pieces, vector<short> position);
             vector<bitset<64>> getBitboard();
-            vector<vector<pieceTypes>> generateMailbox();
+            vector<vector<piece*>> generateMailbox();
             void printBitboard();
             // this one is slow, use one with piece paramter if possible
             void movePiece(short startIndex, short finalIndex);
@@ -45,14 +46,14 @@ namespace BOARD {
             mailbox();
             mailbox(bitboard boardRepresentation);
             ~mailbox();
-            mailbox(vector<vector<pieceTypes>> positions);
-            vector<vector<pieceTypes>> getBoard();
+            mailbox(vector<vector<piece*>> positions);
+            vector<vector<piece*>> getBoard();
             bitboard getBitboard();
-            pieceTypes getPieceAtIndex(vector<short> index);
+            piece* getPieceAtIndex(vector<short> index);
             void printBoard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
         private:
-            vector<vector<pieceTypes>> board = vector<vector<pieceTypes>>(8, vector<pieceTypes>(8, pieceTypes::empty));
+            vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, &piece()));
     };
 
     class board {

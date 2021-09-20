@@ -1,8 +1,9 @@
 #include "piece.h"
 #include <map>
 using namespace std;
+using namespace PIECE;
 
-char getPieceChar(pieceTypes piece) {
+char getPieceChar(pieceTypes p) {
     map<pieceTypes, char> m {
         { pieceTypes::P, 'P' },
         { pieceTypes::R, 'R' },
@@ -19,10 +20,10 @@ char getPieceChar(pieceTypes piece) {
         { pieceTypes::empty, ' ' }
     };
 
-    return m[piece];
+    return m[p];
 }
 
-pieceTypes getPieceByChar(char piece) {
+pieceTypes getPieceByChar(char p) {
     map<char, pieceTypes> m {
         { 'P', pieceTypes::P },
         { 'R', pieceTypes::R },
@@ -39,29 +40,29 @@ pieceTypes getPieceByChar(char piece) {
         { ' ', pieceTypes::empty }
     };
 
-    return m[piece];
+    return m[p];
 }
 
-pieceTypes getPieceByShort(short piece) {
-    pieceTypes types[] = {
-        pieceTypes::P,
-        pieceTypes::R,
-        pieceTypes::N,
-        pieceTypes::B,
-        pieceTypes::K,
-        pieceTypes::Q,
-        pieceTypes::p,
-        pieceTypes::r,
-        pieceTypes::n,
-        pieceTypes::b,
-        pieceTypes::k,
-        pieceTypes::q,
-        pieceTypes::empty
+piece* getPieceByShort(short pieceShort) {
+    piece types[] = {
+        piece({0,0}, 'P', 0),
+        piece({0,0}, 'R', 0),
+        piece({0,0}, 'N', 0),
+        piece({0,0}, 'B', 0),
+        piece({0,0}, 'K', 0),
+        piece({0,0}, 'Q', 0),
+        piece({0,0}, 'p', 1),
+        piece({0,0}, 'r', 1),
+        piece({0,0}, 'n', 1),
+        piece({0,0}, 'b', 1),
+        piece({0,0}, 'k', 1),
+        piece({0,0}, 'q', 1),
+        piece({0,0}, ' ', -1)
     };
-    return types[piece];
+    return &piece(types[pieceShort]);
 }
 
-bool isValidChar(char piece) {
+bool isValidChar(char p) {
     map<char, pieceTypes> m {
         { 'P', pieceTypes::P },
         { 'R', pieceTypes::R },
@@ -77,5 +78,5 @@ bool isValidChar(char piece) {
         { 'q', pieceTypes::q }
     };
 
-    return m.contains(piece);
+    return m.contains(p);
 }

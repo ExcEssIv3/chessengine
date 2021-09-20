@@ -5,9 +5,11 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <cctype>
 
 using namespace std;
 using namespace BOARD;
+using namespace PIECE;
 
 board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -71,8 +73,7 @@ string board::getFenString() {
 // throws exceptions if invalid fenstring
 void board::setFenString(string newString) {
     
-
-    vector<vector<pieceTypes>> positions(8, vector<pieceTypes>(8, pieceTypes::empty));
+    vector<vector<piece*>> positions(8, vector<piece*>(8, &piece()));
 
     short indices[] = {7, 0};
     short i = 0;
@@ -80,11 +81,18 @@ void board::setFenString(string newString) {
     
     while (i < 64) {
         if (isValidChar(fenString[loc])) {
-            positions[indices[0]][indices[1]] = getPieceByChar(fenString[loc]);
+            short upper = 1;
+            if (isupper(fenString[loc]) > 0) {
+                upper = 0;
+            }
+            positions[indices[0]][indices[1]] = &piece({indices[0],indices[1]}, fenString[loc], upper);
             indices[1]++;
             i++;
             loc++;
         } else if (isdigit(fenString[loc])) {
+            for (int j = 0; j < fenString[loc] - '0'; j++) {
+                positions[indices[0]][indices[1] + j]->move({indices[0], static_cast<short>(indices[1] + j)});
+            }
             indices[1] += fenString[loc] - '0';
             i += fenString[loc] - '0';
             loc++;
@@ -168,10 +176,10 @@ void board::printBitboard() {
 }
 
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
-    pieceTypes piece = arrayRepresentation.getPieceAtIndex(startIndex);
+    pieceTypes p = arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType();
     arrayRepresentation.movePiece(startIndex, finalIndex);
     bitRepresentation.movePiece(
-        piece,
+        p,
         startIndex[0] * 8 + startIndex[1],
         finalIndex[0] * 8 + finalIndex[1]
     );
@@ -182,14 +190,14 @@ void board::updateFenString() {
     for (int i = 7; i > -1; i--) {
         int numEmptySpaces = 0;
         for (int j = 0; j < 8; j++) {
-            if (arrayRepresentation.getBoard()[i][j] == pieceTypes::empty) {
+            if (arrayRepresentation.getBoard()[i][j]->getPieceType() == pieceTypes::empty) {
                 numEmptySpaces++;
             } else {
                 if (numEmptySpaces > 0) {
                     newFen << numEmptySpaces;
                     numEmptySpaces = 0;
                 }
-                newFen << getPieceChar(arrayRepresentation.getBoard()[i][j]);
+                newFen << arrayRepresentation.getBoard()[i][j]->getChar();
             }
         }
         if (numEmptySpaces > 0) {
