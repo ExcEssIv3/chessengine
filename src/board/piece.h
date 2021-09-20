@@ -39,7 +39,7 @@ namespace PIECE {
             bool getMoved();
             pieceTypes getPieceType();
             void move(vector<short> position);
-            vector<vector<short>> getLegalMoves(vector<vector<piece>> mailbox);
+            vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
             // bool operator==(const pieceTypes& p);
             // bool operator!=(const pieceTypes& p);
         private:

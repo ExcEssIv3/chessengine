@@ -21,7 +21,7 @@ char getPieceChar(pieceTypes p) {
     };
 
     return m[p];
-}
+};
 
 pieceTypes getPieceByChar(char p) {
     map<char, pieceTypes> m {
@@ -41,7 +41,7 @@ pieceTypes getPieceByChar(char p) {
     };
 
     return m[p];
-}
+};
 
 piece* getPieceByShort(short pieceShort) {
     piece types[] = {
@@ -61,7 +61,7 @@ piece* getPieceByShort(short pieceShort) {
     };
     
     return new piece(types[pieceShort]);
-}
+};
 
 bool isValidChar(char p) {
     map<char, pieceTypes> m {
@@ -80,4 +80,57 @@ bool isValidChar(char p) {
     };
 
     return m.contains(p);
-}
+};
+
+piece::piece() {
+    position = {0,0};
+    pieceChar = ' ';
+    color = -1;
+    moved = false;
+    type = pieceTypes::empty;
+};
+
+piece::piece(vector<short>position, char pieceChar, short color) {
+    this->position = position;
+    this->pieceChar = pieceChar;
+    this->color = color;
+    moved = false;
+    type = getPieceByChar(pieceChar);
+};
+
+piece::piece(const piece &p) {
+    this->position = p.position;
+    this->pieceChar = p.pieceChar;
+    this->color = p.color;
+    this->moved = p.moved;
+    this->type = p.type;
+};
+
+vector<short> piece::getPosition() {
+    return position;
+};
+
+char piece::getChar() {
+    return pieceChar;
+};
+
+short piece::getColor() {
+    return color;
+};
+
+bool piece::getMoved() {
+    return moved;
+};
+
+pieceTypes piece::getPieceType() {
+    return type;
+};
+
+void piece::move(vector<short>position) {
+    this->position = position;
+};
+
+// redefine
+vector<vector<short>> getLegalMoves(vector<vector<short>>) {
+    return {{0,0}, {0,1}};
+};
