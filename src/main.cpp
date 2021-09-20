@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "board/board.h"
-#include "board/piece.h"
+#include "piece/piece.h"
 using namespace std;
 using namespace BOARD;
 

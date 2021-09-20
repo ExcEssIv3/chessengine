@@ -1,7 +1,7 @@
 #ifndef MAILBOX_H
 #define MAILBOX_H
 
-#include "piece.h"
+#include "../piece/piece.h"
 #include <iostream>
 #include <vector>
 #include <tuple>
@@ -32,7 +32,7 @@ namespace BOARD {
             void printBitboard();
             // this one is slow, use one with piece paramter if possible
             void movePiece(short startIndex, short finalIndex);
-            void movePiece(pieceTypes piece, short startIndex, short finalIndex);
+            void movePiece(short bitboardIndex, short startIndex, short finalIndex);
             private:
             // bitboard order:
             // white {pawn, rook, knight, bishop, queen, king}

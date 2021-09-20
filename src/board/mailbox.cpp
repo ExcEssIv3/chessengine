@@ -1,5 +1,5 @@
 #include "board.h"
-#include "piece.h"
+#include "../piece/piece.h"
 #include <iostream>
 #include <vector>
 #include <tuple>
@@ -11,84 +11,84 @@ using namespace PIECE;
 mailbox::mailbox() {
     this->board = vector<vector<piece*>> ({
         vector<piece*> ({
-            new piece({0,0}, 'R', 0),
-            new piece({0,1}, 'N', 0),
-            new piece({0,2}, 'B', 0),
-            new piece({0,3}, 'K', 0),
-            new piece({0,4}, 'Q', 0),
-            new piece({0,5}, 'B', 0),
-            new piece({0,6}, 'N', 0),
-            new piece({0,7}, 'R', 0)
+            new rook({0,0}, 0),
+            new knight({0,1}, 0),
+            new bishop({0,2}, 0),
+            new king({0,3}, 0),
+            new queen({0,4}, 0),
+            new bishop({0,5}, 0),
+            new knight({0,6}, 0),
+            new rook({0,7}, 0)
         }),
         vector<piece*> ({
-            new piece({1,0}, 'P', 0),
-            new piece({1,1}, 'P', 0),
-            new piece({1,2}, 'P', 0),
-            new piece({1,3}, 'P', 0),
-            new piece({1,4}, 'P', 0),
-            new piece({1,5}, 'P', 0),
-            new piece({1,6}, 'P', 0),
-            new piece({1,7}, 'P', 0)
+            new pawn({1,0}, 0),
+            new pawn({1,1}, 0),
+            new pawn({1,2}, 0),
+            new pawn({1,3}, 0),
+            new pawn({1,4}, 0),
+            new pawn({1,5}, 0),
+            new pawn({1,6}, 0),
+            new pawn({1,7}, 0)
         }),
         vector<piece*> ({
-            new piece({2,0}, ' ', -1),
-            new piece({2,1}, ' ', -1),
-            new piece({2,2}, ' ', -1),
-            new piece({2,3}, ' ', -1),
-            new piece({2,4}, ' ', -1),
-            new piece({2,5}, ' ', -1),
-            new piece({2,6}, ' ', -1),
-            new piece({2,7}, ' ', -1)
+            new PIECE::empty({2,0}),
+            new PIECE::empty({2,1}),
+            new PIECE::empty({2,2}),
+            new PIECE::empty({2,3}),
+            new PIECE::empty({2,4}),
+            new PIECE::empty({2,5}),
+            new PIECE::empty({2,6}),
+            new PIECE::empty({2,7})
         }),
         vector<piece*> ({
-            new piece({3,0}, ' ', -1),
-            new piece({3,1}, ' ', -1),
-            new piece({3,2}, ' ', -1),
-            new piece({3,3}, ' ', -1),
-            new piece({3,4}, ' ', -1),
-            new piece({3,5}, ' ', -1),
-            new piece({3,6}, ' ', -1),
-            new piece({3,7}, ' ', -1)
+            new PIECE::empty({3,0}),
+            new PIECE::empty({3,1}),
+            new PIECE::empty({3,2}),
+            new PIECE::empty({3,3}),
+            new PIECE::empty({3,4}),
+            new PIECE::empty({3,5}),
+            new PIECE::empty({3,6}),
+            new PIECE::empty({3,7})
         }),
         vector<piece*> ({
-            new piece({4,0}, ' ', -1),
-            new piece({4,1}, ' ', -1),
-            new piece({4,2}, ' ', -1),
-            new piece({4,3}, ' ', -1),
-            new piece({4,4}, ' ', -1),
-            new piece({4,5}, ' ', -1),
-            new piece({4,6}, ' ', -1),
-            new piece({4,7}, ' ', -1)
+            new PIECE::empty({4,0}),
+            new PIECE::empty({4,1}),
+            new PIECE::empty({4,2}),
+            new PIECE::empty({4,3}),
+            new PIECE::empty({4,4}),
+            new PIECE::empty({4,5}),
+            new PIECE::empty({4,6}),
+            new PIECE::empty({4,7})
         }),
         vector<piece*> ({
-            new piece({5,0}, ' ', -1),
-            new piece({5,1}, ' ', -1),
-            new piece({5,2}, ' ', -1),
-            new piece({5,3}, ' ', -1),
-            new piece({5,4}, ' ', -1),
-            new piece({5,5}, ' ', -1),
-            new piece({5,6}, ' ', -1),
-            new piece({5,7}, ' ', -1)
+            new PIECE::empty({5,0}),
+            new PIECE::empty({5,1}),
+            new PIECE::empty({5,2}),
+            new PIECE::empty({5,3}),
+            new PIECE::empty({5,4}),
+            new PIECE::empty({5,5}),
+            new PIECE::empty({5,6}),
+            new PIECE::empty({5,7})
         }),
         vector<piece*> ({
-            new piece({6,0}, 'p', 1),
-            new piece({6,1}, 'p', 1),
-            new piece({6,2}, 'p', 1),
-            new piece({6,3}, 'p', 1),
-            new piece({6,4}, 'p', 1),
-            new piece({6,5}, 'p', 1),
-            new piece({6,6}, 'p', 1),
-            new piece({6,7}, 'p', 1)
+            new pawn({6,0}, 1),
+            new pawn({6,1}, 1),
+            new pawn({6,2}, 1),
+            new pawn({6,3}, 1),
+            new pawn({6,4}, 1),
+            new pawn({6,5}, 1),
+            new pawn({6,6}, 1),
+            new pawn({6,7}, 1)
         }),
         vector<piece*> ({
-            new piece({7,0}, 'r', 1),
-            new piece({7,1}, 'n', 1),
-            new piece({7,2}, 'b', 1),
-            new piece({7,3}, 'k', 1),
-            new piece({7,4}, 'q', 1),
-            new piece({7,5}, 'b', 1),
-            new piece({7,6}, 'n', 1),
-            new piece({7,7}, 'r', 1)
+            new rook({7,0}, 1),
+            new knight({7,1}, 1),
+            new bishop({7,2}, 1),
+            new king({7,3}, 1),
+            new queen({7,4}, 1),
+            new bishop({7,5}, 1),
+            new knight({7,6}, 1),
+            new rook({7,7}, 1)
         })
     });
 };
@@ -102,11 +102,13 @@ mailbox::mailbox(vector<vector<piece*>> positions) {
 };
 
 mailbox::~mailbox() {
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            delete board[i][j];
-        }
-    }
+    // for (int i = 0; i < 8; i++) {
+    //     for (int j = 0; j < 8; j++) {
+    //         if (board[i][j] != nullptr) {
+    //             delete board[i][j];
+    //         }
+    //     }
+    // }
 };
 
 vector<vector<piece*>> mailbox::getBoard() {
@@ -117,7 +119,7 @@ bitboard mailbox::getBitboard() {
     bitboard boardRepresentation = bitboard();
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 8; j++) {
-            if(board[i][j]->getPieceType() != pieceTypes::empty) {
+            if(board[i][j]->getChar() != ' ') {
                 boardRepresentation.updateBitboard(board[i][j], {static_cast<short>(i), static_cast<short>(j)});
             }
         }
@@ -143,6 +145,6 @@ void mailbox::printBoard() {
 void mailbox::movePiece(vector<short> startIndex, vector<short>finalIndex) {
     piece* pieceToMove = board[startIndex[0]][startIndex[1]];
     pieceToMove->move(finalIndex);
-    board[startIndex[0]][startIndex[1]] = new piece(startIndex, ' ', -1);
+    board[startIndex[0]][startIndex[1]] = new PIECE::empty(startIndex);
     board[finalIndex[0]][finalIndex[1]] = pieceToMove;
 };

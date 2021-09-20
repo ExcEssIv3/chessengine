@@ -1,15 +1,16 @@
 #include "board.h"
-#include "piece.h"
-#include <iostream>
-#include <tuple>
-#include <map>
+#include "../piece/piece.h"
+#include "../piece/piecehelpers.h"
 #include <sstream>
 #include <string>
-#include <cctype>
+#include <regex>
 
 using namespace std;
 using namespace BOARD;
 using namespace PIECE;
+
+// used for checking if is a piece character
+regex validator("P|p|R|r|N|n|B|b|K|k|Q|q");
 
 board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -80,12 +81,8 @@ void board::setFenString(string newString) {
     short loc = 0;
     
     while (i < 64) {
-        if (isValidChar(fenString[loc])) {
-            short upper = 1;
-            if (isupper(fenString[loc]) > 0) {
-                upper = 0;
-            }
-            positions[indices[0]][indices[1]] = new piece({indices[0],indices[1]}, fenString[loc], upper);
+        if (regex_match(string({fenString[loc]}), validator)) {
+            positions[indices[0]][indices[1]] = getPieceByChar(fenString[loc], {indices[0],indices[1]});
             indices[1]++;
             i++;
             loc++;
@@ -176,10 +173,10 @@ void board::printBitboard() {
 }
 
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
-    pieceTypes p = arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType();
+    short index = arrayRepresentation.getPieceAtIndex(startIndex)->getBitboardIndex();
     arrayRepresentation.movePiece(startIndex, finalIndex);
     bitRepresentation.movePiece(
-        p,
+        index,
         startIndex[0] * 8 + startIndex[1],
         finalIndex[0] * 8 + finalIndex[1]
     );
@@ -190,7 +187,7 @@ void board::updateFenString() {
     for (int i = 7; i > -1; i--) {
         int numEmptySpaces = 0;
         for (int j = 0; j < 8; j++) {
-            if (arrayRepresentation.getBoard()[i][j]->getPieceType() == pieceTypes::empty) {
+            if (arrayRepresentation.getBoard()[i][j]->getColor() == -1) {
                 numEmptySpaces++;
             } else {
                 if (numEmptySpaces > 0) {
