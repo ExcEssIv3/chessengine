@@ -59,7 +59,8 @@ piece* getPieceByShort(short pieceShort) {
         piece({0,0}, 'q', 1),
         piece({0,0}, ' ', -1)
     };
-    return &piece(types[pieceShort]);
+    
+    return new piece(types[pieceShort]);
 }
 
 bool isValidChar(char p) {

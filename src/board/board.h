@@ -53,7 +53,7 @@ namespace BOARD {
             void printBoard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
         private:
-            vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, &piece()));
+            vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, new piece()));
     };
 
     class board {

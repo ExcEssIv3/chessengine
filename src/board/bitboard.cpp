@@ -43,7 +43,7 @@ vector<bitset<64>> bitboard::getBitboard() {
 };
 
 vector<vector<piece*>> bitboard::generateMailbox() {
-    vector<vector<piece*>> mailbox(8, vector<piece*>(8, &piece()));
+    vector<vector<piece*>> mailbox(8, vector<piece*>(8, new piece()));
 
     for(int i = 0; i < 12; i++) {
         

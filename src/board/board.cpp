@@ -73,7 +73,7 @@ string board::getFenString() {
 // throws exceptions if invalid fenstring
 void board::setFenString(string newString) {
     
-    vector<vector<piece*>> positions(8, vector<piece*>(8, &piece()));
+    vector<vector<piece*>> positions(8, vector<piece*>(8, new piece()));
 
     short indices[] = {7, 0};
     short i = 0;
@@ -85,7 +85,7 @@ void board::setFenString(string newString) {
             if (isupper(fenString[loc]) > 0) {
                 upper = 0;
             }
-            positions[indices[0]][indices[1]] = &piece({indices[0],indices[1]}, fenString[loc], upper);
+            positions[indices[0]][indices[1]] = new piece({indices[0],indices[1]}, fenString[loc], upper);
             indices[1]++;
             i++;
             loc++;
