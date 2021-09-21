@@ -1,5 +1,6 @@
 #include "piece.h"
 #include "piecehelpers.h"
+#include <iostream>
 
 using namespace PIECE;
 
@@ -30,6 +31,8 @@ piece* getPieceByShort(short p, vector<short> position) {
         case 11:
             return new queen(position, 1);
         default:
+            // should never happened
+            std::cerr << "default case reached in getPieceByShort, value: " << p << std::endl;
             return nullptr;
     }
 };
@@ -62,6 +65,7 @@ piece* getPieceByChar(char p, vector<short> position) {
             return new queen(position, 1);
         default:
             // should never happen
+            std::cerr << "default case reached in getPieceByChar, value: " << p << std::endl;
             return nullptr;
     }
 };
