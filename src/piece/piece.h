@@ -42,9 +42,6 @@ namespace PIECE {
             // might be possible to remove
             pawn(const pawn& p);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal = 128;
-            unsigned short egPieceVal = 213;
     };
 
     class rook: public piece {
@@ -53,9 +50,6 @@ namespace PIECE {
             rook(vector<short> position, short color);
             rook(const rook& r);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal = 1276;
-            unsigned short egPieceVal = 1380;
     };
 
     class knight: public piece {
@@ -64,9 +58,6 @@ namespace PIECE {
             knight(vector<short> position, short color);
             knight(const knight& k);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal = 781;
-            unsigned short egPieceVal = 854;
     };
 
     class bishop: public piece {
@@ -75,9 +66,6 @@ namespace PIECE {
             bishop(vector<short> position, short color);
             bishop(const bishop& b);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal = 825;  
-            unsigned short egPieceVal = 915;  
     };
 
     class king: public piece {
@@ -86,8 +74,6 @@ namespace PIECE {
             king(vector<short> position, short color);
             king(const king& k);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal, egPieceVal = 65535;
     };
 
     class queen: public piece {
@@ -96,9 +82,6 @@ namespace PIECE {
             queen(vector<short> position, short color);
             queen(const queen& q);
             vector<vector<short>> getLegalMoves(vector<vector<short>> positions);
-        private:
-            unsigned short mgPieceVal = 2538;
-            unsigned short egPieceVal = 2682;
     };
 
     class empty: public piece {
@@ -106,13 +89,6 @@ namespace PIECE {
             empty();
             empty(vector<short> position);
             empty(const empty& e);
-        private:
-            vector<short> position = {};
-            char pieceChar = ' ';
-            short color = -1;
-            bool moved = false;
-            unsigned short mgPieceVal, egPieceVal = 0;
-            short bitboardIndex = -1;
     };
 
 };

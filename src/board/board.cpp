@@ -74,7 +74,7 @@ string board::getFenString() {
 // throws exceptions if invalid fenstring
 void board::setFenString(string newString) {
     
-    vector<vector<piece*>> positions(8, vector<piece*>(8, new piece()));
+    vector<vector<piece*>> positions(8, vector<piece*>(8, nullptr));
 
     short indices[] = {7, 0};
     short i = 0;
@@ -88,7 +88,7 @@ void board::setFenString(string newString) {
             loc++;
         } else if (isdigit(fenString[loc])) {
             for (int j = 0; j < fenString[loc] - '0'; j++) {
-                positions[indices[0]][indices[1] + j]->move({indices[0], static_cast<short>(indices[1] + j)});
+                positions[indices[0]][indices[1] + j] = new PIECE::empty({indices[0], static_cast<short>(indices[1] + j)});
             }
             indices[1] += fenString[loc] - '0';
             i += fenString[loc] - '0';

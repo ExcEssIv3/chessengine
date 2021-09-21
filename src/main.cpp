@@ -7,6 +7,7 @@ using namespace BOARD;
 
 int main() {
     board testboard = board("rnbq2nr/1ppkpp1p/3p3b/p5p1/3PP3/1PN1KP2/P1P1N1PP/R1BQ1B1R b - c4 5 10");
+    // board testboard = board();
     cout << testboard.getFenString() << endl;;
     testboard.printMailbox();
     // cout << endl;

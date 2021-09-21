@@ -61,6 +61,7 @@ piece* getPieceByChar(char p, vector<short> position) {
         case 'q':
             return new queen(position, 1);
         default:
+            // should never happen
             return nullptr;
     }
 };
