@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -27,6 +28,6 @@ king::king(const king& k) {
     this->egPieceVal = k.egPieceVal;
 };
 
-vector<vector<short>> king::getLegalMoves(vector<vector<short>> positions) {
-    return {{0, 0}};
+list<short*> king::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

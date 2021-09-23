@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -29,6 +30,6 @@ knight::knight(const knight& n) {
     this->egPieceVal = n.egPieceVal;
 };
 
-vector<vector<short>> knight::getLegalMoves(vector<vector<short>> positions) {
-    return {{0, 0}};
+list<short*> knight::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

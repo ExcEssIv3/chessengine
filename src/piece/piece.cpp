@@ -1,8 +1,9 @@
 #include "piece.h"
-// using namespace std;
+#include <list>
+#include <vector>
+
+using namespace std;
 using namespace PIECE;
-
-
 
 piece::piece() {
     position = {0,0};
@@ -49,6 +50,6 @@ void piece::move(vector<short>position) {
 };
 
 // redefine
-vector<vector<short>> getLegalMoves(vector<vector<short>>) {
-    return {};
+list<short*> piece::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

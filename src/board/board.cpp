@@ -243,3 +243,11 @@ void board::updateFenString() {
     newFen << halfmoveClock << " " << fullmoveClock;
     fenString = newFen.str();
 };
+
+piece* board::getPieceAtIndex(vector<short> index) {
+    return arrayRepresentation.getPieceAtIndex(index);
+};
+
+mailbox board::getMailbox() {
+    return arrayRepresentation;
+}

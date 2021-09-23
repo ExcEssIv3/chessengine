@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -29,6 +30,6 @@ rook::rook(const rook& r) {
     this->egPieceVal = r.egPieceVal;
 };
 
-vector<vector<short>> rook::getLegalMoves(vector<vector<short>> positions) {
-    return {{0, 0}};
+list<short*> rook::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

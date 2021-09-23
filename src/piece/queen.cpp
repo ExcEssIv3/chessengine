@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -29,6 +30,6 @@ queen::queen(const queen& q) {
     this->egPieceVal = q.egPieceVal;
 };
 
-vector<vector<short>> queen::getLegalMoves(vector<vector<short>> positions) {
-    return {{0, 0}};
+list<short*> queen::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

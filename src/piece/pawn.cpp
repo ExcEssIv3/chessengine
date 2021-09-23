@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <list>
 #include <vector>
 
 using namespace std;
@@ -29,6 +30,6 @@ pawn::pawn(const pawn& p) {
     this->egPieceVal = p.egPieceVal;
 };
 
-vector<vector<short>> pawn::getLegalMoves(vector<vector<short>> positions) {
-    return {{0, 0}};
+list<short*> pawn::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
 };

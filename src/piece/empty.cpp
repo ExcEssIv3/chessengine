@@ -1,5 +1,6 @@
 #include "piece.h"
 #include <vector>
+#include <list>
 
 using namespace std;
 using namespace PIECE;
@@ -31,3 +32,7 @@ empty::empty(const empty& e): empty() {
     this->egPieceVal = e.egPieceVal;
     this->bitboardIndex = e.bitboardIndex;
 };
+
+list<short*> empty::getLegalMoves(vector<vector<piece*>> positions) {
+    return list<short*>{};
+}

@@ -2,7 +2,7 @@ PROJDIR := $(CURDIR)
 SOURCEDIR := $(PROJDIR)/src
 BUILDDIR := $(PROJDIR)/build
 CXX = g++
-CXXFLAGS = -std=c++2a -g
+CXXFLAGS = -std=c++2a -g -w
 
 BOARD = $(BUILDDIR)/board
 PIECE = $(BUILDDIR)/piece

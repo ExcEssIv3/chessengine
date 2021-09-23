@@ -80,6 +80,8 @@ namespace BOARD {
             void printMailbox();
             void printBitboard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
+            piece* getPieceAtIndex(vector<short> position);
+            mailbox getMailbox();
         private:
             void updateFenString();
             bool next = 0;
