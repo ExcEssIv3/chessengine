@@ -30,6 +30,6 @@ knight::knight(const knight& n) {
     this->egPieceVal = n.egPieceVal;
 };
 
-list<short*> knight::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> knight::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };

@@ -10,7 +10,8 @@ empty::empty() {
     position = {};
     color = -1;
     moved = false;
-    mgPieceVal, egPieceVal = 0;
+    mgPieceVal = 0;
+    egPieceVal = 0;
     bitboardIndex = -1;
 };
 
@@ -19,7 +20,8 @@ empty::empty(vector<short> position) {
     this->position = position;
     color = -1;
     moved = false;
-    mgPieceVal, egPieceVal = 0;
+    mgPieceVal = 0;
+    egPieceVal = 0;
     bitboardIndex = -1;
 };
 
@@ -33,6 +35,6 @@ empty::empty(const empty& e): empty() {
     this->bitboardIndex = e.bitboardIndex;
 };
 
-list<short*> empty::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> empty::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 }

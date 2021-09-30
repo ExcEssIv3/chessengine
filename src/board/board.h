@@ -26,7 +26,7 @@ namespace BOARD {
             bitboard(vector<vector<piece*>> mailbox);
             ~bitboard();
             // flips bit in a bitboard, not an actual move just an update
-            void updateBitboard(piece* pieces, vector<short> position);
+            void updateBitboard(piece* p, const vector<short>& position);
             vector<bitset<64>> getBitboard();
             vector<vector<piece*>> generateMailbox();
             void printBitboard();
@@ -49,9 +49,9 @@ namespace BOARD {
             mailbox(vector<vector<piece*>> positions);
             vector<vector<piece*>> getBoard();
             bitboard getBitboard();
-            piece* getPieceAtIndex(vector<short> index);
+            piece* getPieceAtIndex(const vector<short>& index);
             void printBoard();
-            void movePiece(vector<short> startIndex, vector<short> finalIndex);
+            void movePiece(const vector<short>& startIndex, const vector<short>& finalIndex);
         private:
             vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, new piece()));
     };

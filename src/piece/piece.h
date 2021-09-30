@@ -23,7 +23,7 @@ namespace PIECE {
             short getBitboardIndex();
             void move(vector<short> position);
             // returns legal moves unaware of things like check
-            virtual list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            virtual list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
         protected:
             vector<short> position;
             char pieceChar;
@@ -42,7 +42,7 @@ namespace PIECE {
             pawn(vector<short> position, short color);
             // might be possible to remove
             pawn(const pawn& p);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class rook: public piece {
@@ -50,7 +50,7 @@ namespace PIECE {
             rook();
             rook(vector<short> position, short color);
             rook(const rook& r);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class knight: public piece {
@@ -58,7 +58,7 @@ namespace PIECE {
             knight();
             knight(vector<short> position, short color);
             knight(const knight& k);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class bishop: public piece {
@@ -66,7 +66,7 @@ namespace PIECE {
             bishop();
             bishop(vector<short> position, short color);
             bishop(const bishop& b);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class king: public piece {
@@ -74,7 +74,7 @@ namespace PIECE {
             king();
             king(vector<short> position, short color);
             king(const king& k);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class queen: public piece {
@@ -82,7 +82,7 @@ namespace PIECE {
             queen();
             queen(vector<short> position, short color);
             queen(const queen& q);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
     class empty: public piece {
@@ -90,7 +90,7 @@ namespace PIECE {
             empty();
             empty(vector<short> position);
             empty(const empty& e);
-            list<short*> getLegalMoves(vector<vector<piece*>> positions);
+            list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
     };
 
 };

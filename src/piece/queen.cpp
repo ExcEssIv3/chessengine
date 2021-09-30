@@ -30,6 +30,6 @@ queen::queen(const queen& q) {
     this->egPieceVal = q.egPieceVal;
 };
 
-list<short*> queen::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> queen::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };

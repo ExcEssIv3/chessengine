@@ -30,6 +30,6 @@ pawn::pawn(const pawn& p) {
     this->egPieceVal = p.egPieceVal;
 };
 
-list<short*> pawn::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> pawn::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };

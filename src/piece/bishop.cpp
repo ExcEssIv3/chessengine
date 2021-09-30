@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <iostream>
 #include <vector>
 #include <list>
 
@@ -30,85 +31,68 @@ bishop::bishop(const bishop& b) {
     this->egPieceVal = b.egPieceVal;
 };
 
-list<short*> bishop::getLegalMoves(vector<vector<piece*>> positions) {
-    list<short*> legalPositions{};
-    short maxSteps = 0;
-    short numSteps = 0;
-    // up left
-    if (7 - position[0] > position[1]) {
-        maxSteps = position[1];
-    } else {
-        maxSteps = position[0];
-    }
+list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& positions) {
+    list<vector<short>> legalPositions;
+    short distUp = 7 - position[0];
+    short distLeft = position[1];
+    short distDown = position[0];
+    short distRight = 7 - position[1];
 
-    for (short i = 1; i < maxSteps; i++) {
-        // evaluates true if the next piece is a friendly piece
+    short maxDistance = 0;
+    short oppositeColor = (color == 0) ? 1 : 0;
+
+    // up left
+    maxDistance = (distUp < distLeft) ? distUp : distLeft;
+    for (short i = 1; i <= maxDistance; i++) {
+        piece currPiece = *positions[position[0] + i][position[1] - i];
+        cout << currPiece.getEgPieceVal() << " " << currPiece.getBitboardIndex() << endl;
         if (positions[position[0] + i][position[1] - i]->getColor() == color) {
             break;
         }
-        short newPosition[] = {position[0] + i, position[1] - i};
-        legalPositions.push_back(newPosition);
-        // evaluates true if the next piece is an enemy piece
-        if (positions[position[0] + i][position[1] - i]->getColor() != -1) {
+        legalPositions.emplace_back(vector<short>({static_cast<short>(position[0] + i), static_cast<short>(position[1] - i)}));
+        if (positions[position[0] + i][position[1] - i]->getColor() == oppositeColor) {
             break;
         }
     }
-    // up right
-    if (7 - position[0] > 7 - position[1]) {
-        maxSteps = position[1];
-    } else {
-        maxSteps = position[0];
-    }
 
-    for (short i = 1; i < maxSteps; i++) {
-        // evaluates true if the next piece is a friendly piece
+    // up right
+    maxDistance = (distUp < distRight) ? distUp : distRight;
+    for (short i = 1; i <= maxDistance; i++) {
+        piece currPiece = *positions[position[0] + i][position[1] + i];
         if (positions[position[0] + i][position[1] + i]->getColor() == color) {
             break;
         }
-        short newPosition[] = {position[0] + i, position[1] - i};
-        legalPositions.push_back(newPosition);
-        // evaluates true if the next piece is an enemy piece
-        if (positions[position[0] + i][position[1] + i]->getColor() != -1) {
+        legalPositions.emplace_back(vector<short>({static_cast<short>(position[0] + i), static_cast<short>(position[1] + i)}));
+        if (positions[position[0] + i][position[1] + i]->getColor() == oppositeColor) {
             break;
         }
-    }
-    // down left
-    if (position[0] > position[1]) {
-        maxSteps = position[1];
-    } else {
-        maxSteps = position[0];
     }
 
-    for (short i = 1; i < maxSteps; i++) {
-        // evaluates true if the next piece is a friendly piece
-        if (positions[position[0] - i][position[1] - i]->getColor() == color) {
-            break;
-        }
-        short newPosition[] = {position[0] + i, position[1] - i};
-        legalPositions.push_back(newPosition);
-        // evaluates true if the next piece is an enemy piece
-        if (positions[position[0] - i][position[1] - i]->getColor() != -1) {
-            break;
-        }
-    }
     // down right
-    if (position[0] > 7 - position[1]) {
-        maxSteps = position[1];
-    } else {
-        maxSteps = position[0];
-    }
-
-    for (short i = 1; i < maxSteps; i++) {
-        // evaluates true if the next piece is a friendly piece
+    maxDistance = (distDown < distRight) ? distUp : distRight;
+    for (short i = 1; i <= maxDistance; i++) {
+        piece currPiece = *positions[position[0] - i][position[1] + i];
         if (positions[position[0] - i][position[1] + i]->getColor() == color) {
             break;
         }
-        short newPosition[] = {position[0] + i, position[1] - i};
-        legalPositions.push_back(newPosition);
-        // evaluates true if the next piece is an enemy piece
-        if (positions[position[0] - i][position[1] + i]->getColor() != -1) {
+        legalPositions.emplace_back(vector<short>({static_cast<short>(position[0] - i), static_cast<short>(position[1] + i)}));
+        if (positions[position[0] - i][position[1] + i]->getColor() == oppositeColor) {
             break;
         }
     }
+
+    // down left
+    maxDistance = (distDown < distLeft) ? distDown : distLeft;
+    for (short i = 1; i <= maxDistance; i++) {
+        piece currPiece = *positions[position[0] - i][position[1] - i];
+        if (positions[position[0] - i][position[1] - i]->getColor() == color) {
+            break;
+        }
+        legalPositions.emplace_back(vector<short>({static_cast<short>(position[0] - i), static_cast<short>(position[1] - i)}));
+        if (positions[position[0] - i][position[1] - i]->getColor() == oppositeColor) {
+            break;
+        }
+    }
+
     return legalPositions;
 }

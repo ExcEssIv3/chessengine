@@ -30,6 +30,6 @@ rook::rook(const rook& r) {
     this->egPieceVal = r.egPieceVal;
 };
 
-list<short*> rook::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> rook::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };

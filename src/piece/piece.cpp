@@ -49,7 +49,15 @@ void piece::move(vector<short>position) {
     this->position = position;
 };
 
+short piece::getMgPieceVal() {
+    return mgPieceVal;
+};
+
+short piece::getEgPieceVal() {
+    return egPieceVal;
+}
+
 // redefine
-list<short*> piece::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> piece::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };

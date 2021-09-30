@@ -31,7 +31,7 @@ bitboard::bitboard(vector<vector<piece*>> mailbox) {
 bitboard::~bitboard() {};
 
 // throws exception on out of bounds
-void bitboard::updateBitboard(piece* p, vector<short> position) {
+void bitboard::updateBitboard(piece* p, const vector<short>& position) {
     short positionConversion = position[0] * 8 + position[1];
     if (positionConversion > 63) {
         string exception = "Position out of bounds, passed value is " + to_string(position[0]) + ", " + to_string(position[1]);

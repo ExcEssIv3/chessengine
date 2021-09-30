@@ -127,7 +127,7 @@ bitboard mailbox::getBitboard() {
     return boardRepresentation;
 };
 
-piece* mailbox::getPieceAtIndex(vector<short> index) {
+piece* mailbox::getPieceAtIndex(const vector<short>& index) {
     return board[index[0]][index[1]];
 };
 
@@ -142,7 +142,7 @@ void mailbox::printBoard() {
     cout <<  " --- --- --- --- --- --- --- ---" << endl;
 };
 
-void mailbox::movePiece(vector<short> startIndex, vector<short>finalIndex) {
+void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex) {
     piece* pieceToMove = board[startIndex[0]][startIndex[1]];
     pieceToMove->move(finalIndex);
     board[startIndex[0]][startIndex[1]] = new PIECE::empty(startIndex);

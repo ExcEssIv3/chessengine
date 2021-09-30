@@ -28,6 +28,6 @@ king::king(const king& k) {
     this->egPieceVal = k.egPieceVal;
 };
 
-list<short*> king::getLegalMoves(vector<vector<piece*>> positions) {
-    return list<short*>{};
+list<vector<short>> king::getLegalMoves(const vector<vector<piece*>>& positions) {
+    return list<vector<short>>{};
 };
