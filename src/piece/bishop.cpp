@@ -44,8 +44,6 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     // up left
     maxDistance = (distUp < distLeft) ? distUp : distLeft;
     for (short i = 1; i <= maxDistance; i++) {
-        piece currPiece = *positions[position[0] + i][position[1] - i];
-        cout << currPiece.getEgPieceVal() << " " << currPiece.getBitboardIndex() << endl;
         if (positions[position[0] + i][position[1] - i]->getColor() == color) {
             break;
         }
@@ -58,7 +56,6 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     // up right
     maxDistance = (distUp < distRight) ? distUp : distRight;
     for (short i = 1; i <= maxDistance; i++) {
-        piece currPiece = *positions[position[0] + i][position[1] + i];
         if (positions[position[0] + i][position[1] + i]->getColor() == color) {
             break;
         }
@@ -71,7 +68,6 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     // down right
     maxDistance = (distDown < distRight) ? distUp : distRight;
     for (short i = 1; i <= maxDistance; i++) {
-        piece currPiece = *positions[position[0] - i][position[1] + i];
         if (positions[position[0] - i][position[1] + i]->getColor() == color) {
             break;
         }
@@ -84,7 +80,6 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     // down left
     maxDistance = (distDown < distLeft) ? distDown : distLeft;
     for (short i = 1; i <= maxDistance; i++) {
-        piece currPiece = *positions[position[0] - i][position[1] - i];
         if (positions[position[0] - i][position[1] - i]->getColor() == color) {
             break;
         }
