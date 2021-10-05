@@ -5,7 +5,8 @@
         "type_traits": "cpp",
         "random": "cpp",
         "tuple": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "ostream": "cpp"
     },
     "editor.bracketPairColorization.enabled": true
 }

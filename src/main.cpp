@@ -8,8 +8,8 @@ using namespace BOARD;
 using namespace PIECE;
 
 int main() {
-    board testboard = board("8/1n6/4n3/3b4/8/1n6/6n1/8 w - - 0 1");
-    piece* testPiece = testboard.getPieceAtIndex({4, 3});
+    board testboard = board("7k/8/8/8/8/8/8/8 w - - 0 1");
+    piece* testPiece = testboard.getPieceAtIndex({7, 7});
     list<vector<short>> moves = testPiece->getLegalMoves(testboard.getMailbox().getBoard());
 
     for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
@@ -19,7 +19,7 @@ int main() {
 
     // board testboard = board("rnbq2nr/1ppkpp1p/3p3b/p5p1/3PP3/1PN1KP2/P1P1N1PP/R1BQ1B1R b - c4 5 10");
     // board testboard = board();
-    // cout << testboard.getFenString() << endl;;
+    // cout << testboard.getFenString() << endl;
     // testboard.printMailbox();
     // // cout << endl;
     // // testboard.printBitboard();
