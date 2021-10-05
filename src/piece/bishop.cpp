@@ -67,7 +67,7 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     }
 
     // down right
-    maxDistance = (distDown < distRight) ? distUp : distRight;
+    maxDistance = (distDown < distRight) ? distDown : distRight;
     for (short i = 1; i <= maxDistance; i++) {
         if (positions[position[0] - i][position[1] + i]->getColor() == color) {
             break;
