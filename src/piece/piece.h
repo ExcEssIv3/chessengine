@@ -21,6 +21,8 @@ namespace PIECE {
             short getMgPieceVal();
             short getEgPieceVal();
             short getBitboardIndex();
+            bool getPinned();
+            void flipPinned();
             void move(vector<short> position);
             // returns legal moves unaware of things like check
             virtual list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
@@ -33,7 +35,7 @@ namespace PIECE {
             unsigned short mgPieceVal;
             unsigned short egPieceVal;
             short bitboardIndex;
-            // pieceTypes type;
+            bool pinned;
     };
 
     class pawn: public piece {

@@ -5,11 +5,10 @@
 using namespace std;
 using namespace PIECE;
 
-empty::empty() {
+empty::empty(): piece() {
     pieceChar = ' ';
     position = {};
     color = -1;
-    moved = false;
     mgPieceVal = 0;
     egPieceVal = 0;
     bitboardIndex = -1;
@@ -33,6 +32,7 @@ empty::empty(const empty& e): empty() {
     this->mgPieceVal = e.mgPieceVal;
     this->egPieceVal = e.egPieceVal;
     this->bitboardIndex = e.bitboardIndex;
+    this->pinned = e.pinned;
 };
 
 list<vector<short>> empty::getLegalMoves(const vector<vector<piece*>>& positions) {

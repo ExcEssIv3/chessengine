@@ -8,12 +8,14 @@ using namespace PIECE;
 piece::piece() {
     position = {0,0};
     moved = false;
+    pinned = false;
 };
 
 piece::piece(vector<short> position, short color) {
     this->position = position;
     this->color = color;
     moved = false;
+    pinned = false;
 };
 
 piece::piece(const piece &p) {
@@ -21,6 +23,7 @@ piece::piece(const piece &p) {
     this->pieceChar = p.pieceChar;
     this->color = p.color;
     this->moved = p.moved;
+    this->pinned = p.pinned;
 };
 
 piece::~piece() {};
@@ -55,6 +58,14 @@ short piece::getMgPieceVal() {
 
 short piece::getEgPieceVal() {
     return egPieceVal;
+}
+
+bool piece::getPinned() {
+    return pinned;
+}
+
+void piece::flipPinned() {
+    pinned = !pinned;
 }
 
 // redefine

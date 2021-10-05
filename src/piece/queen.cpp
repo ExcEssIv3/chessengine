@@ -5,7 +5,7 @@
 using namespace std;
 using namespace PIECE;
 
-queen::queen() {
+queen::queen(): piece() {
     pieceChar = 'Q';
     color = 0;
     bitboardIndex = 5;
@@ -28,6 +28,7 @@ queen::queen(const queen& q) {
     this->bitboardIndex = q.bitboardIndex;
     this->mgPieceVal = q.mgPieceVal;
     this->egPieceVal = q.egPieceVal;
+    this->pinned = q.pinned;
 };
 
 list<vector<short>> queen::getLegalMoves(const vector<vector<piece*>>& positions) {

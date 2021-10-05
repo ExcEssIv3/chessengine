@@ -5,7 +5,7 @@
 using namespace std;
 using namespace PIECE;
 
-rook::rook() {
+rook::rook(): piece() {
     pieceChar = 'R';
     color = 0;
     bitboardIndex = 1;
@@ -28,6 +28,7 @@ rook::rook(const rook& r) {
     this->bitboardIndex = bitboardIndex;
     this->mgPieceVal = r.mgPieceVal;
     this->egPieceVal = r.egPieceVal;
+    this->pinned = r.pinned;
 };
 
 list<vector<short>> rook::getLegalMoves(const vector<vector<piece*>>& positions) {

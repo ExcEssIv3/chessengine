@@ -5,7 +5,7 @@
 using namespace std;
 using namespace PIECE;
 
-king::king() {
+king::king(): piece() {
     pieceChar = 'K';
     color = 0;
     bitboardIndex = 4;
@@ -26,6 +26,7 @@ king::king(const king& k) {
     this->bitboardIndex = k.bitboardIndex;
     this->mgPieceVal = k.mgPieceVal;
     this->egPieceVal = k.egPieceVal;
+    this->pinned = k.pinned;
 };
 
 list<vector<short>> king::getLegalMoves(const vector<vector<piece*>>& positions) {

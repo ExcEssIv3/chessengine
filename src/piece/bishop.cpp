@@ -6,7 +6,7 @@
 using namespace std;
 using namespace PIECE;
 
-bishop::bishop() {
+bishop::bishop(): piece() {
     pieceChar = 'B';
     color = 0;
     bitboardIndex = 2;
@@ -29,6 +29,7 @@ bishop::bishop(const bishop& b) {
     this->bitboardIndex = b.bitboardIndex;
     this->mgPieceVal = b.mgPieceVal;
     this->egPieceVal = b.egPieceVal;
+    this->pinned = b.pinned;
 };
 
 list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& positions) {

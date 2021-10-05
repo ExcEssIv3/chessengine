@@ -5,7 +5,7 @@
 using namespace std;
 using namespace PIECE;
 
-pawn::pawn() {
+pawn::pawn(): piece() {
     pieceChar = 'P';
     color = 0;
     bitboardIndex = 0;
@@ -28,6 +28,7 @@ pawn::pawn(const pawn& p) {
     this->bitboardIndex = p.bitboardIndex;
     this->mgPieceVal = p.mgPieceVal;
     this->egPieceVal = p.egPieceVal;
+    this->pinned = p.pinned;
 };
 
 list<vector<short>> pawn::getLegalMoves(const vector<vector<piece*>>& positions) {

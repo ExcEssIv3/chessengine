@@ -5,7 +5,7 @@
 using namespace std;
 using namespace PIECE;
 
-knight::knight() {
+knight::knight(): piece() {
     pieceChar = 'N';
     color = 0;
     bitboardIndex = 3;
@@ -28,6 +28,7 @@ knight::knight(const knight& n) {
     this->bitboardIndex = n.bitboardIndex;
     this->mgPieceVal = n.mgPieceVal;
     this->egPieceVal = n.egPieceVal;
+    this->pinned = n.pinned;
 };
 
 list<vector<short>> knight::getLegalMoves(const vector<vector<piece*>>& positions) {
