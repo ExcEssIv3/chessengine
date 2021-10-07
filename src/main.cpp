@@ -8,9 +8,8 @@ using namespace BOARD;
 using namespace PIECE;
 
 int main() {
-    board testboard = board("8/3r4/8/r2R1r2/8/3r4/8/8 w - - 0 1");
-    piece* testPiece = testboard.getPieceAtIndex({4, 3});
-    list<vector<short>> moves = testPiece->getLegalMoves(testboard.getMailbox().getBoard());
+    board testboard = board("8/8/8/5pP1/8/8/8/8 w - g4 0 1");
+    list<vector<short>> moves = testboard.getLegalMovesAtIndex({4, 5});
 
     for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
         vector<short> move = *it;

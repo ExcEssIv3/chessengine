@@ -68,6 +68,10 @@ void piece::flipPinned() {
     pinned = !pinned;
 }
 
+piece_enum piece::getPieceType() {
+    return pieceType;
+}
+
 // redefine
 list<vector<short>> piece::getLegalMoves(const vector<vector<piece*>>& positions) {
     return list<vector<short>>{};

@@ -4,6 +4,8 @@
 #include <vector>
 #include <tuple>
 #include <string>
+#include <typeinfo>
+
 using namespace std;
 using namespace BOARD;
 using namespace PIECE;
@@ -142,9 +144,57 @@ void mailbox::printBoard() {
     cout <<  " --- --- --- --- --- --- --- ---" << endl;
 };
 
-void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex) {
+void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, bool isEnPassant) {
     piece* pieceToMove = board[startIndex[0]][startIndex[1]];
     pieceToMove->move(finalIndex);
+    delete board[startIndex[0]][startIndex[1]];
+    delete board[finalIndex[0]][finalIndex[1]];
+    if (isEnPassant) {
+        delete board[startIndex[0]][finalIndex[1]];
+        board[startIndex[0]][finalIndex[1]] = new PIECE::empty(vector<short>({startIndex[0], finalIndex[1]}));
+    }
     board[startIndex[0]][startIndex[1]] = new PIECE::empty(startIndex);
     board[finalIndex[0]][finalIndex[1]] = pieceToMove;
+};
+
+list<vector<short>> mailbox::getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex) {
+    list<vector<short>> legalMoves = board[index[0]][index[1]]->getLegalMoves(board);
+
+    // en passant case
+
+    if (board[index[0]][index[1]]->getPieceType() == piece_enum::PAWN) {
+        // short oppositeColor = (board[index[0]][index[1]]->getColor() == 0) ? 1 : 0;
+        if (board[index[0]][index[1]]->getColor() == 0) {
+            if (index[1] < 7 && 
+                board[index[0]][index[1] + 1]->getColor() == 1 && 
+                board[index[0]][index[1] + 1]->getPieceType() == piece_enum::PAWN) {
+                    if (enPassantIndex == vector<short>({static_cast<short>(index[0] + 1), static_cast<short>(index[1] + 1)})) {
+                        legalMoves.emplace_back(vector<short>({static_cast<short>(index[0] + 1), static_cast<short>(index[1] + 1)}));
+                    }
+            }
+            if (index[1] > 0 && 
+                board[index[0]][index[1] - 1]->getColor() == 1 && 
+                board[index[0]][index[1] - 1]->getPieceType() == piece_enum::PAWN) {
+                    if (enPassantIndex == vector<short>({static_cast<short>(index[0] + 1), static_cast<short>(index[1] - 1)})) {
+                        legalMoves.emplace_back(vector<short>({static_cast<short>(index[0] + 1), static_cast<short>(index[1] - 1)}));
+                    }
+            }
+        } else {
+            if (index[1] < 7 && 
+                board[index[0]][index[1] + 1]->getColor() == 0 && 
+                board[index[0]][index[1] + 1]->getPieceType() == piece_enum::PAWN) {
+                    if (enPassantIndex == vector<short>({static_cast<short>(index[0] - 1), static_cast<short>(index[1] + 1)})) {
+                        legalMoves.emplace_back(vector<short>({static_cast<short>(index[0] - 1), static_cast<short>(index[1] + 1)}));
+                    }
+            }
+            if (index[1] > 0 && 
+                board[index[0]][index[1] - 1]->getColor() == 0 && 
+                board[index[0]][index[1] - 1]->getPieceType() == piece_enum::PAWN) {
+                    if (enPassantIndex == vector<short>({static_cast<short>(index[0] - 1), static_cast<short>(index[1] - 1)})) {
+                        legalMoves.emplace_back(vector<short>({static_cast<short>(index[0] - 1), static_cast<short>(index[1] - 1)}));
+                    }
+            }
+        }
+    }
+    return legalMoves;
 };

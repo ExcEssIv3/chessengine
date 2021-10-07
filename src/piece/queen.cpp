@@ -11,6 +11,7 @@ queen::queen(): piece() {
     bitboardIndex = 5;
     mgPieceVal = 2538;
     egPieceVal = 2682;
+    pieceType = piece_enum::QUEEN;
 };
 
 queen::queen(vector<short> position, short color): piece(position, color) {
@@ -18,6 +19,7 @@ queen::queen(vector<short> position, short color): piece(position, color) {
     bitboardIndex = (color > 0) ? 11 : 5;
     mgPieceVal = 2538;
     egPieceVal = 2682;
+    pieceType = piece_enum::QUEEN;
 };
 
 queen::queen(const queen& q) {
@@ -29,6 +31,7 @@ queen::queen(const queen& q) {
     this->mgPieceVal = q.mgPieceVal;
     this->egPieceVal = q.egPieceVal;
     this->pinned = q.pinned;
+    this->pieceType = q.pieceType;
 };
 
 list<vector<short>> queen::getLegalMoves(const vector<vector<piece*>>& positions) {

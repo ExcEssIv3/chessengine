@@ -10,12 +10,14 @@ king::king(): piece() {
     color = 0;
     bitboardIndex = 4;
     mgPieceVal, egPieceVal = 65535;
+    pieceType = piece_enum::KING;
 };
 
 king::king(vector<short> position, short color): piece(position, color) {
     pieceChar = (color > 0) ? 'k' : 'K';
     bitboardIndex = (color > 0) ? 10 : 4;
     mgPieceVal, egPieceVal = 65535;
+    pieceType = piece_enum::KING;
 };
 
 king::king(const king& k) {
@@ -27,6 +29,7 @@ king::king(const king& k) {
     this->mgPieceVal = k.mgPieceVal;
     this->egPieceVal = k.egPieceVal;
     this->pinned = k.pinned;
+    this->pieceType = k.pieceType;
 };
 
 list<vector<short>> king::getLegalMoves(const vector<vector<piece*>>& positions) {

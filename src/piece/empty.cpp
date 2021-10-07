@@ -12,6 +12,7 @@ empty::empty(): piece() {
     mgPieceVal = 0;
     egPieceVal = 0;
     bitboardIndex = -1;
+    pieceType = piece_enum::EMPTY;
 };
 
 empty::empty(vector<short> position) {
@@ -22,6 +23,7 @@ empty::empty(vector<short> position) {
     mgPieceVal = 0;
     egPieceVal = 0;
     bitboardIndex = -1;
+    pieceType = piece_enum::EMPTY;
 };
 
 empty::empty(const empty& e): empty() {
@@ -32,6 +34,7 @@ empty::empty(const empty& e): empty() {
     this->mgPieceVal = e.mgPieceVal;
     this->egPieceVal = e.egPieceVal;
     this->bitboardIndex = e.bitboardIndex;
+    this->pinned = e.pinned;
     this->pinned = e.pinned;
 };
 

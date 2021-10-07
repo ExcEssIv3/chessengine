@@ -51,7 +51,8 @@ namespace BOARD {
             bitboard getBitboard();
             piece* getPieceAtIndex(const vector<short>& index);
             void printBoard();
-            void movePiece(const vector<short>& startIndex, const vector<short>& finalIndex);
+            void movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, bool isEnPassant);
+            list<vector<short>> getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex);
         private:
             vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, new piece()));
     };
@@ -80,6 +81,7 @@ namespace BOARD {
             void printMailbox();
             void printBitboard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
+            list<vector<short>> getLegalMovesAtIndex(const vector<short>& index);
             piece* getPieceAtIndex(vector<short> position);
             mailbox getMailbox();
         private:

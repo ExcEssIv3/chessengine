@@ -12,6 +12,7 @@ bishop::bishop(): piece() {
     bitboardIndex = 2;
     mgPieceVal = 825;
     egPieceVal = 915;
+    pieceType = piece_enum::BISHOP;
 };
 
 bishop::bishop(vector<short> position, short color): piece(position, color) {
@@ -19,6 +20,7 @@ bishop::bishop(vector<short> position, short color): piece(position, color) {
     bitboardIndex = (color > 0) ? 8 : 2;
     mgPieceVal = 825;
     egPieceVal = 915;
+    pieceType = piece_enum::BISHOP;
 };
 
 bishop::bishop(const bishop& b) {
@@ -30,6 +32,7 @@ bishop::bishop(const bishop& b) {
     this->mgPieceVal = b.mgPieceVal;
     this->egPieceVal = b.egPieceVal;
     this->pinned = b.pinned;
+    this->pieceType = b.pieceType;
 };
 
 list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& positions) {

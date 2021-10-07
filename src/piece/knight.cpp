@@ -11,6 +11,7 @@ knight::knight(): piece() {
     bitboardIndex = 3;
     mgPieceVal = 781;
     egPieceVal = 854;
+    pieceType = piece_enum::KNIGHT;
 };
 
 knight::knight(vector<short> position, short color): piece(position, color) {
@@ -18,6 +19,7 @@ knight::knight(vector<short> position, short color): piece(position, color) {
     bitboardIndex = (color > 0) ? 9 : 3;
     mgPieceVal = 781;
     egPieceVal = 854;
+    pieceType = piece_enum::KNIGHT;
 };
 
 knight::knight(const knight& n) {
@@ -29,6 +31,7 @@ knight::knight(const knight& n) {
     this->mgPieceVal = n.mgPieceVal;
     this->egPieceVal = n.egPieceVal;
     this->pinned = n.pinned;
+    this->pieceType = n.pieceType;
 };
 
 list<vector<short>> knight::getLegalMoves(const vector<vector<piece*>>& positions) {

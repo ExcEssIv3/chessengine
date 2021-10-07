@@ -11,6 +11,7 @@ rook::rook(): piece() {
     bitboardIndex = 1;
     mgPieceVal = 1276;
     egPieceVal = 1380;
+    pieceType = piece_enum::ROOK;
 };
 
 rook::rook(vector<short> position, short color): piece(position, color) {
@@ -18,6 +19,7 @@ rook::rook(vector<short> position, short color): piece(position, color) {
     bitboardIndex = (color > 0) ? 7 : 1;
     mgPieceVal = 1276;
     egPieceVal = 1380;
+    pieceType = piece_enum::ROOK;
 };
 
 rook::rook(const rook& r) {
@@ -29,6 +31,7 @@ rook::rook(const rook& r) {
     this->mgPieceVal = r.mgPieceVal;
     this->egPieceVal = r.egPieceVal;
     this->pinned = r.pinned;
+    this->pieceType = r.pieceType;
 };
 
 list<vector<short>> rook::getLegalMoves(const vector<vector<piece*>>& positions) {

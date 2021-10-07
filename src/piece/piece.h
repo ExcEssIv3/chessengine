@@ -6,6 +6,17 @@
 using namespace std;
 
 namespace PIECE {
+
+    enum piece_enum {
+        PAWN,
+        ROOK,
+        KNIGHT,
+        BISHOP,
+        KING,
+        QUEEN,
+        EMPTY
+    };
+
     class piece {
 
         public:
@@ -24,6 +35,7 @@ namespace PIECE {
             bool getPinned();
             void flipPinned();
             void move(vector<short> position);
+            piece_enum getPieceType();
             // returns legal moves unaware of things like check
             virtual list<vector<short>> getLegalMoves(const vector<vector<piece*>>& positions);
         protected:
@@ -36,6 +48,7 @@ namespace PIECE {
             unsigned short egPieceVal;
             short bitboardIndex;
             bool pinned;
+            piece_enum pieceType;
     };
 
     class pawn: public piece {

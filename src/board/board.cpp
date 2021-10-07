@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <regex>
+#include <typeinfo>
 
 using namespace std;
 using namespace BOARD;
@@ -145,7 +146,7 @@ void board::setFenString(string newString) {
     ss >> nextEval;
     if (nextEval.compare("-")) {
         // -97 shifts ascii code over to 0 for a, 1 for b etc.
-        enPassant = { static_cast<short>((nextEval[0]) - 97), static_cast<short>(nextEval[1] - '0' - 1) };
+        enPassant = { static_cast<short>(nextEval[1] - '0' - 1), static_cast<short>((nextEval[0]) - 97)  };
     } else {
         enPassant = {8, 8};
     }
@@ -174,7 +175,25 @@ void board::printBitboard() {
 
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
     short index = arrayRepresentation.getPieceAtIndex(startIndex)->getBitboardIndex();
-    arrayRepresentation.movePiece(startIndex, finalIndex);
+    bool isEnPassant = false;
+    if (typeid(arrayRepresentation.getPieceAtIndex(startIndex)).name() == "pawn") {
+        if (abs(startIndex[0] - finalIndex[0]) == 2) {
+            if (startIndex[0] - finalIndex[0] < 0) {
+                enPassant = {static_cast<short>(finalIndex[0] + 1), finalIndex[1]};
+            } else {
+                enPassant = {static_cast<short>(finalIndex[0] - 1), finalIndex[1]};
+            }
+        } else {
+            enPassant = {8, 8};
+        }
+
+        if (finalIndex == enPassant) {
+            isEnPassant = true;
+        }
+    } else {
+        enPassant = {8, 8};
+    }
+    arrayRepresentation.movePiece(startIndex, finalIndex, isEnPassant);
     bitRepresentation.movePiece(
         index,
         startIndex[0] * 8 + startIndex[1],
@@ -250,4 +269,8 @@ piece* board::getPieceAtIndex(vector<short> index) {
 
 mailbox board::getMailbox() {
     return arrayRepresentation;
+}
+
+list<vector<short>> board::getLegalMovesAtIndex(const vector<short>& index) {
+    return arrayRepresentation.getLegalMovesAtIndex(index, enPassant);
 }
