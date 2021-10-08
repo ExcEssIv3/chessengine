@@ -36,4 +36,4 @@ int main() {
     // testboard.movePiece({0,2},{2,0});
     // testboard.printMailbox();
     // cout << testboard.getFenString() << endl;
-}
+};

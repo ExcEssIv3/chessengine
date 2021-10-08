@@ -115,7 +115,7 @@ mailbox::~mailbox() {
 
 vector<vector<piece*>> mailbox::getBoard() {
     return board;
-}
+};
 
 bitboard mailbox::getBitboard() {
     bitboard boardRepresentation = bitboard();

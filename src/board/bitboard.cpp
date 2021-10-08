@@ -15,7 +15,7 @@ bitboard::bitboard() {
     board = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
-}
+};
 
 bitboard::bitboard(vector<vector<piece*>> mailbox) {
     for (int i = 0; i < 8; i++) {

@@ -17,7 +17,7 @@ board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     arrayRepresentation = mailbox();
     bitRepresentation = arrayRepresentation.getBitboard();
-}
+};
 
 // throws exception if invalid fenString
 board::board(string fenString) {
@@ -167,11 +167,11 @@ void board::resetBoard() {
 
 void board::printMailbox() {
     arrayRepresentation.printBoard();
-}
+};
 
 void board::printBitboard() {
     bitRepresentation.printBitboard();
-}
+};
 
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
     short index = arrayRepresentation.getPieceAtIndex(startIndex)->getBitboardIndex();
@@ -199,7 +199,7 @@ void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
         startIndex[0] * 8 + startIndex[1],
         finalIndex[0] * 8 + finalIndex[1]
     );
-}
+};
 
 void board::updateFenString() {
     stringstream newFen = stringstream();
@@ -269,8 +269,8 @@ piece* board::getPieceAtIndex(vector<short> index) {
 
 mailbox board::getMailbox() {
     return arrayRepresentation;
-}
+};
 
 list<vector<short>> board::getLegalMovesAtIndex(const vector<short>& index) {
     return arrayRepresentation.getLegalMovesAtIndex(index, enPassant);
-}
+};
