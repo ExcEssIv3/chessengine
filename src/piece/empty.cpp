@@ -40,4 +40,4 @@ empty::empty(const empty& e): empty() {
 
 list<vector<short>> empty::getLegalMoves(const vector<vector<piece*>>& positions) {
     return list<vector<short>>{};
-}
+};

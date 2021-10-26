@@ -94,4 +94,4 @@ list<vector<short>> bishop::getLegalMoves(const vector<vector<piece*>>& position
     }
 
     return legalPositions;
-}
+};
