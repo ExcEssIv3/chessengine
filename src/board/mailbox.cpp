@@ -4,7 +4,6 @@
 #include <vector>
 #include <tuple>
 #include <string>
-#include <typeinfo>
 
 using namespace std;
 using namespace BOARD;
@@ -135,19 +134,20 @@ piece* mailbox::getPieceAtIndex(const vector<short>& index) {
 
 void mailbox::printBoard() {
     for (int i = 7; i > -1; i--) {
-        cout << " --- --- --- --- --- --- --- ---" << endl;
+        cout << "   --- --- --- --- --- --- --- ---" << endl;
+        cout << i + 1 << " ";
         for (int j = 0; j < 8; j++) {
             cout << "| " << board[i][j]->getChar() << " ";
         }
         cout << "|" << endl;
     }
-    cout <<  " --- --- --- --- --- --- --- ---" << endl;
+    cout << "   --- --- --- --- --- --- --- ---" << endl;
+    cout << "    a   b   c   d   e   f   g   h" << endl;
 };
 
 void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, bool isEnPassant) {
     piece* pieceToMove = board[startIndex[0]][startIndex[1]];
     pieceToMove->move(finalIndex);
-    delete board[startIndex[0]][startIndex[1]];
     delete board[finalIndex[0]][finalIndex[1]];
     if (isEnPassant) {
         delete board[startIndex[0]][finalIndex[1]];

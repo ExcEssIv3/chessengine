@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 #include <regex>
-#include <typeinfo>
 
 using namespace std;
 using namespace BOARD;
@@ -176,19 +175,20 @@ void board::printBitboard() {
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
     short index = arrayRepresentation.getPieceAtIndex(startIndex)->getBitboardIndex();
     bool isEnPassant = false;
-    if (typeid(arrayRepresentation.getPieceAtIndex(startIndex)).name() == "pawn") {
+    if (arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType() == piece_enum::PAWN) {
+
+        if (finalIndex == enPassant) {
+            isEnPassant = true;
+        }
+
         if (abs(startIndex[0] - finalIndex[0]) == 2) {
-            if (startIndex[0] - finalIndex[0] < 0) {
+            if (startIndex[0] - finalIndex[0] > 0) {
                 enPassant = {static_cast<short>(finalIndex[0] + 1), finalIndex[1]};
             } else {
                 enPassant = {static_cast<short>(finalIndex[0] - 1), finalIndex[1]};
             }
         } else {
             enPassant = {8, 8};
-        }
-
-        if (finalIndex == enPassant) {
-            isEnPassant = true;
         }
     } else {
         enPassant = {8, 8};
