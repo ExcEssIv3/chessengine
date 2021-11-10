@@ -27,6 +27,7 @@ namespace PIECE {
             ~piece();
             vector<short> getPosition();
             char getChar();
+            // 0 for white, 1 for black, -1 for empty
             short getColor();
             bool getMoved();
             short getMgPieceVal();
@@ -41,7 +42,6 @@ namespace PIECE {
         protected:
             vector<short> position;
             char pieceChar;
-            // 0 for white, 1 for black, -1 for empty
             short color;
             bool moved;
             unsigned short mgPieceVal;

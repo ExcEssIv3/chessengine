@@ -16,12 +16,18 @@ board::board() {
     fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     arrayRepresentation = mailbox();
     bitRepresentation = arrayRepresentation.getBitboard();
+
+    updateWhiteThreatened();
+    updateBlackThreatened();
 };
 
 // throws exception if invalid fenString
 board::board(string fenString) {
     this->fenString = fenString;
     setFenString(fenString);
+
+    updateWhiteThreatened();
+    updateBlackThreatened();
 };
 
 board::~board() {};
@@ -164,8 +170,16 @@ void board::resetBoard() {
     return;
 };
 
-void board::printMailbox() {
-    arrayRepresentation.printBoard();
+void board::printMailbox(bool showThreatened, short color) {
+    if (showThreatened && color == -1) {
+        throw "Cannot show threatened for empty color";
+    } else if (showThreatened && color == 0) {
+        arrayRepresentation.printBoard(showThreatened, whiteThreatened);
+    } else if (showThreatened && color == 1) {
+        arrayRepresentation.printBoard(showThreatened, blackThreatened);
+    } else {
+        arrayRepresentation.printBoard(showThreatened, vector<vector<bool>>());
+    }
 };
 
 void board::printBitboard() {
@@ -175,8 +189,11 @@ void board::printBitboard() {
 void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
     short index = arrayRepresentation.getPieceAtIndex(startIndex)->getBitboardIndex();
     bool isEnPassant = false;
-    if (arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType() == piece_enum::PAWN) {
+    bool isCastle = false;
 
+    // en passant
+
+    if (arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType() == piece_enum::PAWN) {
         if (finalIndex == enPassant) {
             isEnPassant = true;
         }
@@ -193,12 +210,23 @@ void board::movePiece(vector<short> startIndex, vector<short> finalIndex) {
     } else {
         enPassant = {8, 8};
     }
-    arrayRepresentation.movePiece(startIndex, finalIndex, isEnPassant);
+
+    // castle 
+
+    if (arrayRepresentation.getPieceAtIndex(startIndex)->getPieceType() == piece_enum::KING && abs(finalIndex[1] - startIndex[1]) > 1) {
+        isCastle = true;
+    }
+    arrayRepresentation.movePiece(startIndex, finalIndex, isEnPassant, isCastle);
     bitRepresentation.movePiece(
         index,
         startIndex[0] * 8 + startIndex[1],
         finalIndex[0] * 8 + finalIndex[1]
     );
+    if (arrayRepresentation.getPieceAtIndex(finalIndex)->getColor() == 0) {
+        updateBlackThreatened();
+    } else {
+        updateWhiteThreatened();
+    }
 };
 
 void board::updateFenString() {
@@ -272,5 +300,66 @@ mailbox board::getMailbox() {
 };
 
 list<vector<short>> board::getLegalMovesAtIndex(const vector<short>& index) {
-    return arrayRepresentation.getLegalMovesAtIndex(index, enPassant);
+    if (arrayRepresentation.getBoard()[index[0]][index[1]]->getColor() == 0) {
+        return arrayRepresentation.getLegalMovesAtIndex(index, enPassant, whiteThreatened);
+    } else if (arrayRepresentation.getBoard()[index[0]][index[1]]->getColor() == 1) {
+        return arrayRepresentation.getLegalMovesAtIndex(index, enPassant, blackThreatened);
+    } else {
+        // if color is -1, then it's an empty piece, no legal moves
+        return list<vector<short>>({});
+    }
 };
+
+vector<vector<bool>> board::getWhiteThreatened() {
+    return whiteThreatened;
+};
+
+vector<vector<bool>> board::getBlackThreatened() {
+    return blackThreatened;
+};
+
+void board::updateWhiteThreatened() {
+    for (short i = 0; i < 8; i++) {
+        for (short j = 0; j < 8; j++) {
+            if (this->getPieceAtIndex(vector<short>({i, j}))->getColor() == 1) {
+                list<vector<short>> moves = this->getLegalMovesAtIndex(vector<short>({i, j}));
+                if (this->getPieceAtIndex(vector<short>({i, j}))->getPieceType() == piece_enum::PAWN) {
+                    for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
+                        if (abs((*it)[1] - j) == 1 && !this->whiteThreatened[(*it)[0]][(*it)[1]]) {
+                            this->whiteThreatened[(*it)[0]][(*it)[1]] = 1;
+                        }
+                    }
+                } else {
+                    for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
+                        if (!this->whiteThreatened[(*it)[0]][(*it)[1]]) {
+                            this->whiteThreatened[(*it)[0]][(*it)[1]] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void board::updateBlackThreatened() {
+    for (short i = 0; i < 8; i++) {
+        for (short j = 0; j < 8; j++) {
+            if (this->getPieceAtIndex(vector<short>({i, j}))->getColor() == 0) {
+                list<vector<short>> moves = this->getLegalMovesAtIndex(vector<short>({i, j}));
+                if (this->getPieceAtIndex(vector<short>({i, j}))->getPieceType() == piece_enum::PAWN) {
+                    for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
+                        if (abs((*it)[1] - j) == 1 && !this->blackThreatened[(*it)[0]][(*it)[1]]) {
+                            this->blackThreatened[(*it)[0]][(*it)[1]] = 1;
+                        }
+                    }
+                } else {
+                    for (list<vector<short>>::iterator it = moves.begin(); it != moves.end(); it++) {
+                        if (!this->blackThreatened[(*it)[0]][(*it)[1]]) {
+                            this->blackThreatened[(*it)[0]][(*it)[1]] = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

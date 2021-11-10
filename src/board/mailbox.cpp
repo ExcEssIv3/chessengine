@@ -132,12 +132,19 @@ piece* mailbox::getPieceAtIndex(const vector<short>& index) {
     return board[index[0]][index[1]];
 };
 
-void mailbox::printBoard() {
+void mailbox::printBoard(bool showThreatened, vector<vector<bool>> threatened) {
     for (int i = 7; i > -1; i--) {
         cout << "   --- --- --- --- --- --- --- ---" << endl;
         cout << i + 1 << " ";
         for (int j = 0; j < 8; j++) {
-            cout << "| " << board[i][j]->getChar() << " ";
+            if (showThreatened && threatened[i][j]) {
+                cout << "|T";
+            } else {
+                cout << "| ";
+            }
+            cout << board[i][j]->getChar() << " ";
+            
+            // cout << "| " << board[i][j]->getChar() << " ";
         }
         cout << "|" << endl;
     }
@@ -145,7 +152,7 @@ void mailbox::printBoard() {
     cout << "    a   b   c   d   e   f   g   h" << endl;
 };
 
-void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, bool isEnPassant) {
+void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, const bool& isEnPassant, const bool& isCastle) {
     piece* pieceToMove = board[startIndex[0]][startIndex[1]];
     pieceToMove->move(finalIndex);
     delete board[finalIndex[0]][finalIndex[1]];
@@ -153,11 +160,24 @@ void mailbox::movePiece(const vector<short>& startIndex, const vector<short>& fi
         delete board[startIndex[0]][finalIndex[1]];
         board[startIndex[0]][finalIndex[1]] = new PIECE::empty(vector<short>({startIndex[0], finalIndex[1]}));
     }
+    if (isCastle) {
+        if (finalIndex[1] == 1) {
+            board[finalIndex[0]][0]->move(vector<short>({finalIndex[0], 3}));
+            delete board[finalIndex[0]][3];
+            board[finalIndex[0]][3] = board[finalIndex[0]][0];
+            board[finalIndex[0]][0] = new PIECE::empty(vector<short>({finalIndex[0], 0}));
+        } else {
+            board[finalIndex[0]][7]->move(vector<short>({finalIndex[0], 5}));
+            delete board[finalIndex[0]][5];
+            board[finalIndex[0]][5] = board[finalIndex[0]][7];
+            board[finalIndex[0]][7] = new PIECE::empty(vector<short>({finalIndex[0], 7}));
+        }
+    }
     board[startIndex[0]][startIndex[1]] = new PIECE::empty(startIndex);
     board[finalIndex[0]][finalIndex[1]] = pieceToMove;
 };
 
-list<vector<short>> mailbox::getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex) {
+list<vector<short>> mailbox::getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex, const vector<vector<bool>>& threatened) {
     list<vector<short>> legalMoves = board[index[0]][index[1]]->getLegalMoves(board);
 
     // en passant case
@@ -195,6 +215,37 @@ list<vector<short>> mailbox::getLegalMovesAtIndex(const vector<short>& index, co
                     }
             }
         }
+    } else if (board[index[0]][index[1]]->getPieceType() == piece_enum::KING) {
+        for (list<vector<short>>::iterator it = legalMoves.begin(); it != legalMoves.end(); it++) {
+            if (threatened[(*it)[0]][(*it)[1]]) {
+                it = legalMoves.erase(it);
+            }
+        }
+
+        if (!board[index[0]][index[1]]->getMoved()) { // castling
+            if (board[index[0]][0]->getPieceType() == piece_enum::ROOK &&
+                !board[index[0]][0]->getMoved() &&
+                board[index[0]][0]->getColor() == board[index[0]][index[1]]->getColor() &&
+                board[index[0]][1]->getColor() == -1 &&
+                board[index[0]][2]->getColor() == -1 &&
+                board[index[0]][3]->getColor() == -1 &&
+                !threatened[index[0]][2] &&
+                !threatened[index[0]][3] &&
+                !threatened[index[0]][4]) {
+                    legalMoves.emplace_back(vector<short>({index[0], 2}));
+            }
+            if (board[index[0]][7]->getPieceType() == piece_enum::ROOK &&
+                !board[index[0]][7]->getMoved() &&
+                board[index[0]][7]->getColor() == board[index[0]][index[1]]->getColor() &&
+                board[index[0]][6]->getColor() == -1 &&
+                board[index[0]][5]->getColor() == -1 &&
+                !threatened[index[0]][6] &&
+                !threatened[index[0]][5] &&
+                !threatened[index[0]][4]) {
+                    legalMoves.emplace_back(vector<short>({index[0], 6}));
+            }
+        }
     }
+
     return legalMoves;
 };

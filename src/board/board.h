@@ -10,12 +10,7 @@
 using namespace PIECE;
 using namespace std;
 
-// TODO: investigate bitsets
-
-    
 namespace BOARD {
-
-    // TODO: print statement for board containing extra game information and mailbox
 
     class bitboard {
         
@@ -50,9 +45,9 @@ namespace BOARD {
             vector<vector<piece*>> getBoard();
             bitboard getBitboard();
             piece* getPieceAtIndex(const vector<short>& index);
-            void printBoard();
-            void movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, bool isEnPassant);
-            list<vector<short>> getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex);
+            void printBoard(bool showThreatened, vector<vector<bool>> threatened);
+            void movePiece(const vector<short>& startIndex, const vector<short>& finalIndex, const bool& isEnPassant, const bool& isCastle);
+            list<vector<short>> getLegalMovesAtIndex(const vector<short>& index, const vector<short>& enPassantIndex, const vector<vector<bool>>& threatened);
         private:
             vector<vector<piece*>> board = vector<vector<piece*>>(8, vector<piece*>(8, new piece()));
     };
@@ -78,21 +73,29 @@ namespace BOARD {
             string getFenString();
             void setFenString(string newString);
             void resetBoard();
-            void printMailbox();
+            // prints mailbox, if showThreatened = true color needs to be 0 | 1
+            void printMailbox(bool showThreatened = false, short color = -1);
             void printBitboard();
             void movePiece(vector<short> startIndex, vector<short> finalIndex);
             list<vector<short>> getLegalMovesAtIndex(const vector<short>& index);
             piece* getPieceAtIndex(vector<short> position);
             mailbox getMailbox();
+            vector<vector<bool>> getWhiteThreatened();
+            vector<vector<bool>> getBlackThreatened();
+            void updateWhiteThreatened();
+            void updateBlackThreatened();
         private:
             void updateFenString();
             bool next = 0;
             // 4 boolean vector representing KQkq (uppercase = white)
-            vector<bool> castling = { false, false, false, false };
+            vector<bool> castling = vector<bool>(4, 0);
             vector<short> enPassant = {8, 8};
             short halfmoveClock = 0;
             int fullmoveClock = 0;
             string fenString;
+
+            vector<vector<bool>> whiteThreatened = vector<vector<bool>>(8, vector<bool>(8, 0));
+            vector<vector<bool>> blackThreatened = vector<vector<bool>>(8, vector<bool>(8, 0));
 
             // board representations
             bitboard bitRepresentation;

@@ -6,7 +6,8 @@
         "random": "cpp",
         "tuple": "cpp",
         "regex": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iostream": "cpp"
     },
     "editor.bracketPairColorization.enabled": true,
     "peacock.affectActivityBar": false,
